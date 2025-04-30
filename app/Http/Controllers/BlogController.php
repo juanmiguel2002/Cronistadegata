@@ -158,13 +158,13 @@ class BlogController extends Controller
 
         // Next Post
         $nextPost = Post::where('id', '>', $post->id)
-                    ->where('category', $post->category)
+                    // ->where('category', $post->category)
                     ->orderBy('id', 'asc')
                     ->first();
 
         // Previous Post
         $prevPost = Post::where('id', '<', $post->id)
-                    ->where('category', $post->category)
+                    // ->where('category', $post->category)
                     ->where('visibility', 1)
                     ->first();
 
@@ -184,7 +184,7 @@ class BlogController extends Controller
             'post' => $post,
             'relatedPosts' => $relatedPosts,
             'nextPost' => $nextPost,
-            'previousPost' => $prevPost
+            'prevPost' => $prevPost
         ];
 
         return view('front.pages.single_post', $data);

@@ -1,7 +1,7 @@
 <div>
     <div class="pd-20 card-box mb-30">
         <div class="row mb-20">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="search"><b class="text-secondary">Buscar</b>:</label>
                 <input class="form-control" type="text" wire:model.live='search' id="search" placeholder="Buscar artícle...">
             </div>

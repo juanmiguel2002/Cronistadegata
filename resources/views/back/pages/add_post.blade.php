@@ -5,24 +5,25 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="title">
-                    <h4>Add post</h4>
+                    <h4>Nou Article</h4>
                 </div>
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('admin.dashboard') }}">Home</a>
+                            <a href="{{ route('admin.dashboard') }}">Inici</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Add post
+                            Nou Article
                         </li>
                     </ol>
                 </nav>
             </div>
             <div class="col-md-6 col-sm-12 text-right">
-                <a href="{{ route('admin.posts') }}" class="btn btn-primary">All posts</a>
+                <a href="{{ route('admin.posts') }}" class="btn btn-primary">Tots els articles</a>
             </div>
         </div>
     </div>
+    
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -42,16 +43,16 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for=""><b>Title</b></label>
-                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter the title..." required>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Títol article" required>
                             <small class="text-danger text-error title_error"></small>
                         </div>
                         <div class="form-group">
                             <label for=""><b>Content</b></label>
-                            <textarea name="content" id="content" class="form-control" rows="10" cols="30"></textarea>
+                            <textarea name="content" id="content" class="form-control" rows="20" cols="30"></textarea>
                         </div>
                     </div>
                 </div>
-                <div class="card card-box mb-2">
+                {{-- <div class="card card-box mb-2">
                     <div class="card-header weight-500">SEO</div>
                     <div class="card-body">
                         <div class="form-group">
@@ -63,7 +64,7 @@
                             <textarea name="meta_descripcion" cols="30" rows="10" class="form-control" placeholder="Enter post meta description..." ></textarea>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="col-md-3">
                 <div class="card card-box mb-2">
@@ -83,11 +84,11 @@
                         <div class="d-block mb-3" style="max-width: 250px">
                             <img src="" alt="" id="preview-featured-image" class="img-thumbnail" >
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for=""><span>Tags:</span></label>
                             <input type="text" name="tags" class="form-control" data-role="tagsinput">
                             <small class="text-danger error-text tags_error"></small>
-                        </div>
+                        </div> --}}
                         <hr>
                         <div class="form-group">
                             <label for=""><span>Visibility:</span></label>
@@ -105,7 +106,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Create post</button>
+            <button type="submit" class="btn btn-primary">Publicar</button>
         </div>
     </form>
 @endsection

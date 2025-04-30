@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\ParentCategory;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -28,6 +29,7 @@ class PostController extends Controller
             }
         }
         if(count($categories) > 0) {
+            $categories_html .= '<option value="">Seleccionar Categoria</option>';
             foreach($categories as $category) {
                 $categories_html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
             }
@@ -44,9 +46,9 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|unique:posts,title|max:255',
-            'content' => 'required',
+            'content' => 'nullable',
             'category' => 'required|exists:categories,id',
-            'featured_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
         ]);
 
         if ($request->hasFile('featured_image')) {
@@ -70,31 +72,29 @@ class PostController extends Controller
             // resized
             Image::make($path. $imageName)
                 ->fit(512,320)
-                ->save($resized_image . 'resized_'. $imageName);
-            // Crear el post
-            $post = new Post();
-            $post->user_id = Auth::user()->id;
-            $post->title = $request->title;
-            $post->category = $request->category;
-            $post->content = $request->content;
-            $post->tags = $request->tags;
-            $post->meta_keywords = $request->meta_keywords;
-            $post->visibility = $request->visibility;
-            $post->featured_image = $imageName;
+               ->save($resized_image . 'resized_'. $imageName);
+        }
 
-            if ($post->save()) {
-                return redirect()->back()->with('success', 'Post created successfully!');
-            } else {
-                return redirect()->back()->with('error', 'ERROR NO SE A GUARDADO');
-            }
+        // Crear el post
+        $post = new Post();
+        $post->user_id = Auth::user()->id;
+        $post->title = $request->title;
+        $post->category = $request->category;
+        $post->content = $request->content;
+        $post->visibility = $request->visibility;
+        $post->featured_image = $imageName ?? null;
+        $post->slug = Str::slug($request->title);
+
+        if ($post->save()) {
+            return redirect()->to('/admin/posts')->with('success', 'Article Publicat!');
         } else {
-            return redirect()->back()->with('error', 'Failed. NO SE A SUBIDO UNA IMG');
+            return redirect()->back()->with('error', 'ERROR NO SE A GUARDADO');
         }
     }
 
     public function allPosts(){
         $data =[
-            'pageTitle' => 'Posts'
+            'pageTitle' => 'Articles'
         ];
         return view('back.pages.posts', $data);
     }

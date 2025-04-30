@@ -84,6 +84,7 @@ class Posts extends Component
         // $this->resetPage();
         // session()->flash('message', 'Post deleted successfully!');
     }
+    
     public function deletePostAction($id) {
         $post = Post::find($id);
         $path = 'images/posts/';
