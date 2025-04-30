@@ -1,0 +1,509 @@
+:root {
+  --gris:#f1f1f1;
+  --blanco:white;
+  --blancoRoto:#f2f2f2;
+  --negro:#000000;
+  --colorPrimario:#6f87b6;
+  --grisClaro: #ddd;
+  --colorSecundario:#0026cc;
+  --azulgris:#6C7890;
+  --fuente:'Yanone Kaffeesatz', sans-serif;
+  --fuenteTitulo: 'Archivo', sans-serif;;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--gris);
+}
+
+h2 {
+  font-family: var(--fuenteTitulo);
+}
+
+h4 {
+  text-align: center;
+  font-size: large;
+}
+
+.link {
+  text-decoration: none;
+}
+
+/*imagen del logo*/
+.logo {
+  vertical-align: middle;
+  float: left;
+}
+
+/* MENU */
+/* .navbar {
+  display: inline-block;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  background-color: var(--azulgris);
+  position: relative;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: var(--blancoRoto);
+  text-align: center;
+  padding: 16px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: var(--grisClaro);
+  color: black;
+  vertical-align: middle;
+}
+
+.navbar .icon {
+  display: none;
+} */
+.navbar {
+    display: flex;
+    /* justify-content: space-between;
+    align-items: center; */
+    /* padding: 10px; */
+    background-color: var(--azulgris);
+}
+
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navbar .icon {
+    display: none;
+}
+/* buscador */
+.navbar-search {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search input[type="text"] {
+    padding: 6px;
+    margin-right: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+}
+
+.navbar-search button {
+    padding: 6px 10px;
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+}
+
+.navbar-search button:hover {
+    background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+    .navbar a:not(:first-child), .navbar-search {
+        display: none;
+    }
+    .navbar a.icon {
+        float: right;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .navbar.responsive {
+        position: relative;
+    }
+    .navbar.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .navbar.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .navbar.responsive .navbar-search {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* FECHA DEL ARTICULO */
+/* .date {
+  font-weight: bold;
+  line-height: normal;
+  background-color: var(--azulgris);
+  padding: 2px;
+  color: var(--blanco);
+} */
+
+.temas {
+    margin-left: 1rem;
+
+}
+
+.temas .visitas {
+    font-size: 14px;
+}
+
+/* ABOUT  */
+/* .portada {
+  width: 100%;
+  height: auto;
+}
+.about {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+} */
+
+/* TITULO PORTADA */
+.titulo {
+  font-size: 60px;
+  margin-bottom: 15px;
+  color: var(--blanco);
+  font-family: var(--fuente);
+}
+@media (min-width: 400px) {
+  .titulo {
+    text-align: center;
+    font-size: 60px;
+  }
+}
+
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 78%;
+
+  /* Padding left column*/
+  padding-left: 10px;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 22%;
+  padding-left: 12px;
+  /* Padding right column*/
+  padding-right: 10px;
+}
+/*Titulos de la columna derecha*/
+article > h3 {
+    margin-top: auto;
+    text-align: center;
+    background-color: var(--colorPrimario);
+    color: var(--blanco);
+    border-radius: 6px;
+}
+
+/* Estilo del formulario */
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaciado entre elementos del formulario */
+}
+
+/* Etiquetas del formulario */
+.filter-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Estilo de los selectores */
+.filter-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.filter-form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botón de envío */
+.filter-form button {
+    background-color: var(--colorPrimario);
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-form button:hover {
+    background-color: var(--colorSecundario);
+}
+
+/* banner alerta */
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/*formato de los temas */
+#temas li {
+    margin-top: -1px; /* Prevent double borders */
+    /* background-color: var(--blancoRoto); */
+    padding: 10px;
+    font-size: 16px;
+}
+
+#temas a {
+    color: var(--colorSecundario);
+    text-decoration: none;
+}
+#temas li:hover{
+    background-color: var(--azulgris);
+}
+
+#temas a:hover{
+    color: var(--blanco);
+}
+/* count posts category */
+.posts {
+    align-self: flex-end;
+    text-align: right;
+    padding-right: 10px;
+    float: right;
+}
+
+/*foto links Redes Sociales*/
+.foto {
+    width: 80px;
+}
+
+.social a {
+    text-decoration: none;
+}
+/* IMAGEN DE LA PORTADA */
+  .imagen {
+    width: 86%;
+  }
+
+/****PROPIEDADES DEL ARTICULO, TÍTULO, LINK,IMAGEN...*****/
+.post-header {
+    margin-bottom: 20px;
+}
+
+.post-title {
+    font-size: 1.5rem;
+    margin: 0 0 10px;
+    color: #222;
+}
+
+.post-meta {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.post-meta span {
+    display: inline-block;
+    margin-right: 10px;
+}
+.categoria {
+    font-family: Verdana;
+    color: #222;
+    text-decoration: none;
+}
+.categoria:hover {
+    color: var(--colorPrimario);
+    text-decoration: none;
+}
+
+/* Fake image */
+.fakeimg {
+  image-rendering: auto;
+  text-align: center;
+  padding-bottom: 20px;
+
+}
+
+.fakeimg img {
+  width: 40%;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .post-title {
+        font-size: 1.8rem;
+    }
+
+    .post-meta {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-container {
+        padding: 15px;
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+    }
+
+    .post-meta {
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .post-content {
+        font-size: 0.85rem;
+    }
+}
+
+/* TEXTO ARTICULO CENTER */
+.texto {
+  border-left: 2rem
+}
+
+/* Add a card effect for articles */
+.card {
+   background-color: var(--blanco);
+   padding: 15px;
+   margin-top: 10px;
+   border-radius: 10px;
+    -webkit-box-shadow: 0 0 28px rgba(0, 0, 0, .08);
+    box-shadow: 0 0 28px rgba(0, 0, 0, .08)
+}
+
+
+/******* CONTACTO *******/
+/* .expancion {
+  background-color: var(--blanco);
+  padding: 14px;
+  margin-top: 10px;
+  width: 100%;
+} */
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+footer {
+  padding: 10px;
+  text-align: end;
+  background: var(--grisClaro);
+  margin-top: 14px;
+}
+footer a {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn, .imagen, .fakeimg img {
+    width: 100%;
+    padding: 0;
+    height: auto;
+  }
+}
+
+/***PROPIEDADES DEL MENÚ***/
+ul {
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style: none;
+}
+/* Contenedor de la paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+/* Estilos para cada elemento de paginación */
+.page-item {
+    margin: 0 4px;
+}
+
+/* Enlace de página activa */
+.page-item.active .page-link {
+    background-color: var(--colorPrimario);
+    color: #fff;
+}
+
+/* Estilos para los enlaces de página */
+.page-link {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #979797;
+    border-radius: 4px;
+    display: block; /* Hace que los enlaces ocupen toda la anchura por defecto */
+    margin: 5px auto; /* Ajusta el margen para centrar */
+}
+
+.page-item {
+    margin: 0 4px; /* Añadido el margen para espaciado entre enlaces */
+}
+
+.page-link:hover:not(.active) {
+    background-color: var(--grisClaro);
+    border: 1px solid #979797;
+}
+
+/* Desactivar enlaces de página anteriores y siguientes */
+.page-item.disabled .page-link {
+    background-color: var(--grisClaro);
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Estilos para el contenedor de información de paginación */
+.pagination-info {
+    margin-top: 12px; /* Espacio superior */
+    text-align: center; /* Centra el texto */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #000000; /* Color de texto */
+}
