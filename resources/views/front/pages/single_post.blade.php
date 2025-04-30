@@ -21,14 +21,36 @@
                 {!!$post->content !!}
             @endif
         </div>
-        {{-- <div id="myModal" class="modal">
-            <span class="close" onclick="closeModal()">×</span>
-            <div class="imagen">
-                <a href="https://gatadegorgos.cronista.blog/storage/upload/TioPepeLluís.jpg" target="_blank">
-                    <img class="modal-content" id="img01">
-                </a>
-            </div>
-            <div id="caption"></div>
-        </div> --}}
     </article>
+    <div class="prev-next-posts mt-4 mb-4 p-3">
+        <div class="nav-links">
+            @if($prevPost)
+                <div class="nav-item text-start">
+                    <span class="label">&laquo; Anterior</span>
+                    <a href="{{ route('post', $prevPost->slug) }}"
+                       title="Ver post anterior: {{ $prevPost->title }}"
+                       aria-label="Post anterior: {{ $prevPost->title }}"
+                       rel="prev"
+                       class="titlePost">
+                        {{ $prevPost->title }}
+                    </a>
+                </div>
+            @else
+                <div class="nav-item"></div>
+            @endif
+
+            @if($nextPost)
+                <div class="nav-item text-end">
+                    <span class="label">Siguiente &raquo;</span>
+                    <a href="{{ route('post', $nextPost->slug) }}"
+                       title="Ver post siguiente: {{ $nextPost->title }}"
+                       aria-label="Post siguiente: {{ $nextPost->title }}"
+                       rel="next"
+                       class="titlePost">
+                        {{ $nextPost->title }}
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
 @endsection
