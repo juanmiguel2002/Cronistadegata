@@ -156,16 +156,17 @@ class BlogController extends Controller
                     ->orderBy('id', 'asc')
                     ->take(3)->get();
 
-        // Next Post
-        $nextPost = Post::where('id', '>', $post->id)
+        // Anterior Post
+        $prevPost = Post::where('id', '>', $post->id)
                     // ->where('category', $post->category)
+                    ->where('visibility', 1)
                     ->orderBy('id', 'asc')
                     ->first();
 
-        // Previous Post
-        $prevPost = Post::where('id', '<', $post->id)
+                    // Siguiente Post
+        $nextPost = Post::where('id', '<', $post->id)
                     // ->where('category', $post->category)
-                    ->where('visibility', 1)
+                    ->orderBy('id', 'desc')
                     ->first();
 
         $title = $post->title;
@@ -177,7 +178,6 @@ class BlogController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'article');
         SEOTools::opengraph()->addImage(asset('images/posts'. $post->featured_image));
-
 
         $data = [
             'pageTitle' => $title,

@@ -53,4 +53,33 @@
             @endif
         </div>
     </div>
+
+    @if($relatedPosts->count())
+        <div class="related-posts mt-5">
+            <h3 style="text-align: center">Articles Relacionats</h3>
+            <div class="related-posts-grid">
+                @foreach($relatedPosts as $related)
+                    <div class="related-post-card">
+                        <a href="{{ route('post', $related->slug) }}" title="{{ $related->title }}">
+                            @if($related->featured_image)
+                                <img src="{{ asset('images/posts/' . $related->featured_image) }}" alt="{{ $related->featured_image }}" class="related-img">
+                            @endif
+                            <h5 class="related-title">{{ $related->title }}</h5>
+                        </a>
+                        <div class="related-content">
+                            <p class="related-date">
+                                {{ $related->created_at->format('d M Y') }}
+                            </p>
+                            <p class="related-excerpt">
+                                {{ Str::limit(strip_tags($related->content), 120) }}
+                            </p>
+                            <a href="{{ route('post', $related->slug) }}" class="btn btn-sm btn-outline-primary mt-2">
+                                Leer más
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 @endsection
