@@ -73,7 +73,7 @@
                             <p class="related-excerpt">
                                 {{ Str::limit(strip_tags($related->content), 120) }}
                             </p>
-                            <a href="{{ route('post', $related->slug) }}" class="btn btn-sm btn-outline-primary mt-2">
+                            <a href="{{ route('post', $related->slug) }}" class="btn btn-primary">
                                 Leer más
                             </a>
                         </div>
