@@ -145,8 +145,8 @@ class PostController extends Controller
         $featured_image_name = $post->featured_image;
 
         $request->validate([
-            'title' =>'required|max:255|unique:posts,title,'.$post->id,
-            'content' =>'required',
+            'title' =>'required|max:255|unique:posts,title,'. $post->id,
+            'content' =>'nullable',
             'category' =>'required|exists:categories,id',
             'featured_image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp',
         ]);
@@ -205,14 +205,11 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->category = $request->category;
         $post->content = $request->content;
-        $post->tags = $request->tags;
         $post->featured_image = $featured_image_name;
         $post->visibility = $request->visibility;
-        $post->meta_keywords = $request->meta_keywords;
-        $post->meta_description = $request->meta_description;
 
         if ($post->save()) {
-            return redirect()->back()->with('success', 'Post updated successfully!');
+            return redirect()->back()->with('success', 'Article actualitzat!');
         } else {
             return redirect()->back()->with('error', 'ERROR NO SE A GUARDADO');
         }

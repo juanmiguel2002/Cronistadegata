@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-box mb-2">
+                {{-- <div class="card card-box mb-2">
                     <div class="card-header weight-500">SEO</div>
                     <div class="card-body">
                         <div class="form-group">
@@ -63,7 +63,7 @@
                             <textarea name="meta_descripcion" cols="30" rows="10" class="form-control" placeholder="Enter post meta description..." >{!!$post->meta_description!!}</textarea>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="col-md-3">
                 <div class="card card-box mb-2">
@@ -105,7 +105,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Update post</button>
+            <button type="submit" class="btn btn-primary">Actualitzar article</button>
         </div>
     </form>
 @endsection
