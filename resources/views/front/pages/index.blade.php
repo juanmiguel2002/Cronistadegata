@@ -3,6 +3,7 @@
 @section('meta_tags')
     {!! SEO::generate() !!}
 @endsection
+
 @section('main')
     @if (!empty($posts))
         @foreach ($posts as $post)
@@ -13,7 +14,7 @@
                     <i class="ti-timer mr-1"> </i> {{readDuration($post->title, $post->content)}} @choice('min|mins', readDuration($post->title, $post->content))
                 </h5>
                 <div class="fakeimg">
-                    {{-- @php
+                    @php
                         $imagePath = public_path('images/posts/resized/resized_' . $post->featured_image);
                         $imageUrl = asset('images/posts/resized/resized_' . $post->featured_image);
                     @endphp
@@ -22,8 +23,7 @@
                         <img src="{{ $imageUrl }}" alt="{{ $post->featured_image }}">
                     @else
                         <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->featured_image }}">
-                    @endif --}}
-                    <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->featured_image }}">
+                    @endif
                 </div>
 
                 {!!Str::ucfirst(words($post->content, 65))!!}
