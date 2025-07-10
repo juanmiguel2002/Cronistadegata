@@ -15,7 +15,7 @@ class OnlySuperAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->type != 'superAdmin') {
+        if (auth()->user()->type != 'superadmin') {
             abort(403, 'You are not authorized to access this page');
         }
         return $next($request);

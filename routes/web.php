@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\OnlySuperAdmin;
 use Illuminate\Support\Facades\Route;
 
 // FRONTEND ROUTES
@@ -39,7 +40,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::get('/personalizar', 'personalizar')->name('personalizar');
             Route::get('/carrusel', 'carrusel')->name('carrusel');
 
-            Route::middleware(['onlySuperAdmin'])->group(function(){
+            Route::middleware(OnlySuperAdmin::class)->group(function(){
                 Route::get('/settings', 'generalSettings')->name('settings');
             });
         });

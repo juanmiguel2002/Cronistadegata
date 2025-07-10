@@ -57,7 +57,7 @@
                             <td>
                                 <img src="/images/posts/{{$post->featured_image}}" width="100">
                             </td>
-                            <td>{{ $post->title }}</td>
+                            <td><a href="{{ route('post', ['slug'=>$post->slug]) }}" target="_black">{{ $post->title }}</a></td>
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $post->post_category->name }}</td>
                             <td>
