@@ -25,57 +25,84 @@ class AuthController extends Controller
         return view('back.pages.auth.forgot', $data);
     }
 
-    public function loginHandler(Request $request){
+    public function loginHandler(Request $request)
+    {
+        // Determinar si es login por email o username
         $fieldType = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if ($fieldType == 'email') {
-            $request->validate([
-                'login_id' => 'required|email|exists:users,email',
-                'password' => 'required|min:5'
-            ],[
+        // Validar campos
+        $request->validate(
+            [
+                'login_id' => 'required',
+                'password' => 'required|min:5',
+                'remember' => 'sometimes|boolean',
+            ],
+            [
                 'login_id.required' => 'Enter your email or username.',
-                'login_id.email' => 'Invalid email address.',
-                'login_id.exists' => 'No se encuentra el email.',
-            ]);
-        } else {
-            $request->validate([
-                'login_id' => 'required|email|exists:users,username',
-                'password' => 'required|min:5'
-            ],[
-                'login_id.required' => 'Enter your email or username.',
-                'login_id.exists' => 'No account found for this username.'
-            ]);
-        }
-        $creds = array(
-            $fieldType => $request->login_id,
-            'password' => $request->password
+                'password.required' => 'Password is required.',
+            ]
         );
 
-        if (Auth::attempt($creds)) {
-            if (Auth::user()->status == UserStatus::Inactive) {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-                return redirect()->route('admin.login')->withInput()->with('fail', 'Your account is inactive.');
-            } else if (Auth::user()->status == UserStatus::Pending) {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-                return redirect()->route('admin.login')->withInput()->with('fail', 'Your account is Pending.');
-            }
-            return redirect()->route('admin.dashboard');
-        } else {
-            return redirect()->route('admin.login')->withInput()->with('fail', 'Incorrect password.');
+        // Además, validación condicional según tipo de login
+        $this->validateUserExists($fieldType, $request->login_id);
 
+        // Preparar credenciales
+        $creds = [
+            $fieldType => $request->login_id,
+            'password' => $request->password,
+        ];
+        $remember = $request->boolean('remember'); // true si checkbox está marcado
+
+        // Intentar autenticar con remember
+        if (Auth::attempt($creds, $remember)) {
+            // Revisar status del usuario
+            if (in_array(Auth::user()->status, [UserStatus::Inactive, UserStatus::Pending])) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                $msg = Auth::user()->status === UserStatus::Inactive
+                    ? 'Your account is inactive.'
+                    : 'Your account is Pending.';
+
+                return redirect()->route('admin.login')
+                    ->withInput()
+                    ->with('fail', $msg);
+            }
+
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->route('admin.login')
+            ->withInput()
+            ->with('fail', 'Incorrect password.');
+    }
+
+    /**
+     * Valida que el usuario exista por el tipo de campo.
+     */
+    protected function validateUserExists(string $fieldType, string $value): void
+    {
+        if ($fieldType === 'email') {
+            request()->validate(
+                ['login_id' => 'exists:users,email'],
+                ['login_id.exists' => 'No account found for this email address.']
+            );
+        } else {
+            request()->validate(
+                ['login_id' => 'exists:users,username'],
+                ['login_id.exists' => 'No account found for this username.']
+            );
         }
     }
+
     public function sendPassword(Request $request){
 
         $request->validate([
             'email' =>'required|email|exists:users,email',
         ],[
-            'email.required' => 'Please enter your email.',
-            'email.email' => 'Invalid email address.',
+            'email.required' => 'Por favor, introduzca su correo electrónico.',
+            'email.email' => 'Dirección de correo electrónico no válida.',
         ]);
 
         $user = User::where('email', $request->email)->first();

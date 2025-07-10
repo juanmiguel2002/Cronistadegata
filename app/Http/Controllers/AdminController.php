@@ -27,7 +27,7 @@ class AdminController extends Controller
 
     public function profileView(Request $request){
         $data = [
-            'pageTitle' => 'Profile',
+            'pageTitle' => 'Perfil',
         ];
 
         return view('back.pages.profile', $data);
