@@ -13,6 +13,8 @@ Route::get('/posts/category/{slug}', [BlogController::class, 'showCategory'])->n
 Route::get('/search', [BlogController::class, 'showSearch'])->name('search');
 Route::get('/posts/filter', [BlogController::class, 'filterPosts'])->name('posts.filter');
 Route::get('/posts/destacats', [BlogController::class, 'showDestacats'])->name('destacats');
+Route::get('/contacto', [BlogController::class, 'contactPage'])->name('contacto');
+Route::post('/contacto', [BlogController::class, 'sendEmail'])->name('contacto.send');
 
 // ADMIN ROUTES
 
@@ -36,7 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::get('/categories', 'categoriesPage')->name('categories');
             Route::get('/personalizar', 'personalizar')->name('personalizar');
             Route::get('/carrusel', 'carrusel')->name('carrusel');
-            
+
             Route::middleware(['onlySuperAdmin'])->group(function(){
                 Route::get('/settings', 'generalSettings')->name('settings');
             });

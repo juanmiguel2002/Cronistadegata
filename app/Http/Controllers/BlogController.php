@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactoMail;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -210,5 +212,32 @@ class BlogController extends Controller
         ];
 
         return view('front.pages.destacats', $data);
+    }
+
+    public function contactPage() {
+        $title = 'Contacte';
+        $description = 'Contacta amb nosaltres per a qualsevol dubte o consulta.';
+
+        // Meta SEO
+        SEOTools::setTitle($title, false);
+        SEOTools::setDescription($description);
+        SEOTools::opengraph()->setUrl(url()->current());
+
+        $data = [
+            'pageTitle' => $title,
+        ];
+        return view('front.pages.contact', $data);
+    }
+
+    public function sendEmail(Request $request) {
+        $datos = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'nullable|string|max:5000',
+        ]);
+
+        Mail::to('juanmi0802@gmail.com')->send(new ContactoMail($datos));
+
+        return redirect()->back()->with('success', 'El teu missatge s\'ha enviat correctament.');
     }
 }

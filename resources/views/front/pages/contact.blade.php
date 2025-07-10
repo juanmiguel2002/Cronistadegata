@@ -28,6 +28,11 @@
             <!-- Formulario -->
             <div class="col-md-7">
                 <h3 class="mb-4">Envía un missatge</h3>
+                @if(session('success'))
+                    <div class="alert alert-success mt-3">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <form action="{{ route('contacto.send') }}" method="POST" class="animate__animated animate__fadeInRight">
                     @csrf
                     <div class="form-floating mb-3">
@@ -52,6 +57,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary px-4">Enviar</button>
                 </form>
+
             </div>
         </div>
     </div>
