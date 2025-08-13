@@ -18,22 +18,12 @@
                 <img src="/images/posts/{{ $post->featured_image }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" style="width:100%;max-width:600px">
             @endif
         </div>
-
-        {{-- MODAL --}}
-        <div id="myModal" class="modal" onclick="closeModal(event)">
-            <span class="close" onclick="closeModal(event)">&times;</span>
-            <div class="modal-content-wrapper">
-                <a id="modalLink" href="#" target="_blank">
-                    <img class="modal-content" id="img01">
-                </a>
-                <div id="caption"></div>
-            </div>
-        </div>
         <div class="texto">
             @if($post->content)
                 {!!$post->content !!}
             @endif
         </div>
+        <x-modal />
     </article>
     <div class="prev-next-posts mt-4 mb-4 p-3">
         <div class="nav-links">
@@ -96,24 +86,3 @@
         </div>
     @endif
 @endsection
-
-<script>
-    function openModal(img) {
-        const modal = document.getElementById("myModal");
-        const modalImg = document.getElementById("img01");
-        const captionText = document.getElementById("caption");
-        const modalLink = document.getElementById("modalLink");
-
-        modal.style.display = "block";
-        modalImg.src = img.src;
-        captionText.innerHTML = img.alt;
-        modalLink.href = img.src;
-    }
-
-    function closeModal() {
-        var modal = document.getElementById('myModal');
-        modal.style.display = "none";
-    }
-</script>
-
-
