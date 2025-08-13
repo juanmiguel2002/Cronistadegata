@@ -12,30 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('front/vendors/styles/icon-font.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body>
     <header>
         <x-header-carrousel />
     </header>
-
-    {{-- <nav class="navbar" id="myTopnav">
-        <a href="/" class="logo-container">
-            <img class="logo" src="{{ asset('storage/'.settings()->site_logo) }}" alt="Cronistadegata" />
-        </a>
-        <a href="/">Inici</a>
-        <a href="{{ route('destacats') }}">Destacats</a>
-        <a href="{{ route('contacto') }}">Contacte</a>
-
-        <!-- Buscador -->
-        <form class="navbar-search" action="{{ route('search') }}" method="GET">
-            <input type="text" name="query" placeholder="Buscar...">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
-        <button class="nav-mobile" id="nav-mobile" aria-label="Abrir menú">
-            <i class="fa fa-bars"></i>
-        </button>
-    </nav> --}}
 
     <main class="row">
         <section class="leftcolumn">
@@ -69,5 +52,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+        });
+        document.getElementById('nav-toggle').addEventListener('click', function () {
+            document.getElementById('nav-menu').classList.toggle('show');
+
+        });
+    </script>
+
 </body>
 </html>
