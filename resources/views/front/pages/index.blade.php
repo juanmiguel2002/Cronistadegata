@@ -13,22 +13,23 @@
                     <a class="link" href="{{ route('category', $post->post_category->slug) }}">{{ $post->post_category->name }}</a> </strong>
                     <i class="ti-timer mr-1"> </i> {{readDuration($post->title, $post->content)}} @choice('min|mins', readDuration($post->title, $post->content))
                 </h5>
-                <div class="fakeimg">
+                <div class="image">
                     @php
                         $imagePath = public_path('images/posts/resized/resized_' . $post->featured_image);
                         $imageUrl = asset('images/posts/resized/resized_' . $post->featured_image);
                     @endphp
 
                     @if (file_exists($imagePath))
-                        <img src="{{ $imageUrl }}" alt="{{ $post->featured_image }}">
+                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" >
                     @else
-                        <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->featured_image }}">
+                        <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)">
                     @endif
                 </div>
 
                 {!!Str::ucfirst(words($post->content, 65))!!}
                 <a class="link" href="{{ route('post', $post->slug) }}">Llegir més</a>
             </article>
+            <x-modal />
         @endforeach
         {{$posts->appends(request()->input())->links('components.custom_pagination')}}
     @endif
