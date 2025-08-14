@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\ParentCategory;
 use App\Models\Post;
+use App\Models\PostImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,17 +50,18 @@ class PostController extends Controller
             'content' => 'nullable',
             'category' => 'required|exists:categories,id',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp'
         ]);
+        $path = 'images/posts/';
+        $resized_image = $path. 'resized/';
 
         if ($request->hasFile('featured_image')) {
             // Procesar y almacenar la imagen
-            $path = 'images/posts/';
             $file = $request->file('featured_image');
             $imageName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
             $file->move(public_path($path), $imageName);
 
             // generate thumbnail image
-            $resized_image = $path. 'resized/';
             if(!File::isDirectory($resized_image)){
                 File::makeDirectory($resized_image, 0777,true,true);
             }
@@ -81,11 +83,38 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->category = $request->category;
         $post->content = $request->content;
-        $post->visibility = $request->visibility;
+        $post->visibility = $request->visibility;   
         $post->featured_image = $imageName ?? null;
         $post->slug = Str::slug($request->title);
+        $save = $post->save();
+        // Guardar imágenes adicionales para el carrusel
+        $image_path = 'images/posts/carousel/';
+        $resized_imagen = $image_path . 'resized/';
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $name = time() . '_' . preg_replace('/\s+/', '_', $image->getClientOriginalName());
+                $image->move(public_path($path), $name);
 
-        if ($post->save()) {
+                if(!File::isDirectory($resized_imagen)){
+                    File::makeDirectory($resized_imagen, 0777,true,true);
+                }
+
+                Image::make($path . $name)
+                    ->fit(250, 250)
+                    ->save($resized_imagen . 'thumb_' . $name);
+
+                Image::make($path . $name)
+                    ->fit(1024, 640)
+                    ->save($resized_imagen . 'resized_' . $name);
+
+                PostImage::create([
+                    'post_id' => $post->id,
+                    'image_name' => $name
+                ]);
+            }
+        }
+
+        if ($save) {
             return redirect()->to('/admin/posts')->with('success', 'Article Publicat!');
         } else {
             return redirect()->back()->with('error', 'ERROR NO SE A GUARDADO');

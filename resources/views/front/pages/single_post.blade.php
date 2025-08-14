@@ -23,6 +23,22 @@
                 {!!$post->content !!}
             @endif
         </div>
+        {{-- Carrusel de imágenes --}}
+        @if ($post->images->count() > 0)
+            <div id="gallery">
+                <div class="gallery-container">
+                    @foreach ($post->images as $image)
+                        <figure class="gallery-item">
+                            <img src="{{ asset('images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}">
+                        </figure>
+                    @endforeach
+                </div>
+                <nav class="gallery-navigation">
+                    <button class="nav-button prev-button"><span>&#60;</span></button>
+                    <button class="nav-button next-button"><span>&#62;</span></button>
+                </nav>
+            </div>
+        @endif
         <x-modal />
     </article>
     <div class="prev-next-posts mt-4 mb-4 p-3">
@@ -77,7 +93,7 @@
                                 {{ Str::limit(strip_tags($related->content), 120) }}
                             </p>
                             <a href="{{ route('post', $related->slug) }}" class="btn btn-primary">
-                                Leer más
+                                Llegir més
                             </a>
                         </div>
                     </div>

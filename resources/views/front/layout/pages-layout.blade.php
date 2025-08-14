@@ -53,6 +53,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{{ asset('front/js/slider.js') }}"></script>
     <script>
         new Swiper(".mySwiper", {
             loop: true,
@@ -60,12 +61,11 @@
                 delay: 4000,
                 disableOnInteraction: false,
             },
-        });
+        })
         document.getElementById('nav-toggle').addEventListener('click', function () {
             document.getElementById('nav-menu').classList.toggle('show');
 
         });
     </script>
-
 </body>
 </html>

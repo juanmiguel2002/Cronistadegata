@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -42,13 +42,25 @@
                 <div class="card card-box mb-2">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for=""><b>Title</b></label>
+                            <label for=""><b>Títol</b></label>
                             <input type="text" name="title" id="title" class="form-control" placeholder="Títol article" required>
                             <small class="text-danger text-error title_error"></small>
                         </div>
                         <div class="form-group">
-                            <label for=""><b>Content</b></label>
-                            <textarea name="content" id="content" class="form-control" rows="20" cols="30"></textarea>
+                            <label for=""><b>Text</b></label>
+                            <textarea name="content" id="content" class="form-control" rows="20" cols="40"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card card-box mb-2">
+                        <div class="card-header weight-500">Carrousel</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for=""><span>Imatges del Carrousel</span></label>
+                                <input type="file" name="images[]" id="images" class="form-control-file form-control" multiple>
+                                <small class="text-danger error-text "></small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -77,7 +89,7 @@
                             <small class="text-danger text-error category_error"></small>
                         </div>
                         <div class="form-group">
-                            <label for=""><span>Featured Image</span></label>
+                            <label for=""><span>Imatge destacada</span></label>
                             <input type="file" name="featured_image" id="featured_image" class="form-control-file form-control" height="auto">
                             <small class="text-danger error-text featured_image_error"></small>
                         </div>
@@ -131,21 +143,21 @@
         ClassicEditor
         .create(document.querySelector('#content'), {
             toolbar: {
-            items: [
-                'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                'blockQuote', 'insertTable', '|', 'undo', 'redo'
-            ]
+                items: [
+                    'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                    'blockQuote', 'insertTable', '|', 'undo', 'redo'
+                ]
             },
             language: 'es', // Cambiar el idioma, por ejemplo: 'es' para español
             image: {
-            toolbar: [
-                'imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side'
-            ]
+                toolbar: [
+                    'imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side'
+                ]
             },
             table: {
-            contentToolbar: [
-                'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
-            ]
+                contentToolbar: [
+                    'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
+                ]
             },
             licenseKey: '', // Puedes dejarlo vacío si usas la versión gratuita
 

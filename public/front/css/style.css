@@ -416,6 +416,72 @@ article > h3 {
     text-decoration: none;
 }
 
+/* Estilo básico para la galería */
+    figure {
+        margin:0;
+    }
+
+    #gallery {
+        max-width: 800px;
+        margin: auto;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .gallery-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .gallery-item {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        display: block;
+        border-radius: 4px;
+    }
+
+    /* Navegación de la galería */
+    .gallery-navigation {
+        display: flex;
+        justify-content: space-between;
+        width: calc(100% - 40px);
+        margin: 0 20px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%)
+    }
+
+    .nav-button {
+        background-color: rgba(0,0,0, .3);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .nav-button > span {
+        font-size: 30px;
+    }
+    .nav-button:hover {
+        background-color: var(--colorPrimario);
+    }
+
+    /* Paginación */
+    .swiper-pagination-bullet {
+        background: #007BFF;
+        opacity: 0.8;
+    }
+
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+
 /* Paginación post  */
 .prev-next-posts {
     background-color: var(--blanco);
