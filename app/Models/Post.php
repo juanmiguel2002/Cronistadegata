@@ -35,6 +35,10 @@ class Post extends Model
         ];
     }
 
+    public function images()
+    {
+        return $this->hasMany(PostImage::class);
+    }
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
