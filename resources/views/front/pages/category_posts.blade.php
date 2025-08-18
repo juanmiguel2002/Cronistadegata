@@ -9,15 +9,15 @@
     </div>
     @foreach ($posts as $post)
             <article class="card">
-                <h2 class="card-title">{{ date_format($post->created_at, 'd/m/Y') }} <a class="link" href="{{ route('post', $post->slug) }}">{{ $post->title }}</a></h2>
-                <h5 class="temas">en <strong>{{ $post->post_category->name }} </strong>
+                <h2 class="post-title">{{ date_format($post->created_at, 'd/m/Y') }} <a class="link post-title" href="{{ route('post', $post->slug) }}">{{ $post->title }}</a></h2>
+                <h5 class="temas">en <strong class="post-tema">{{ $post->post_category->name }} </strong>
                     <i class="ti-timer mr-1"> </i> {{readDuration($post->title, $post->content)}} @choice('min|mins', readDuration($post->title, $post->content))
                 </h5>
                 <div class="fakeimg">
                     <img src="{{ asset('images/posts/'.$post->featured_image) }}" alt="{{$post->featured_image}}">
                 </div>
                 {!!Str::ucfirst(words($post->content, 60))!!}
-                <a class="link" href="{{ route('post', $post->slug) }}">Llegir més</a>
+                <a class="link post-tema" href="{{ route('post', $post->slug) }}">Llegir més</a>
             </article>
         @endforeach
     @if ($posts->count() > 0)

@@ -189,6 +189,7 @@ h4 {
     }
     .post-tema {
         color: var(--colorPrimario);
+        font-family: var(--fuenteTitulo);
         text-decoration: none;
     }
     .post-tema:hover {
@@ -201,16 +202,28 @@ h4 {
         align-items: center;        /* centra verticalmente */
         flex-wrap: nowrap;          /* evita que se parta en varias líneas */
         gap: 5px;                   /* espacio entre elementos */
+
         font-size: clamp(0.9rem, 2vw, 1rem);
-        color: #555;
+        color: #222;
         margin-bottom: 10px;
+
         overflow: hidden;           /* opcional, evita desbordes */
         text-overflow: ellipsis;    /* opcional, pone "..." si se corta */
         white-space: nowrap;        /* fuerza todo en una sola línea */
     }
+    .temas a {
+        color: var(--colorPrimario);
+        font-family: var(--fuenteTitulo);
+        text-decoration: none;
+    }
+    .temas a:hover {
+        color: var(--colorSecundario);
+        text-decoration: none;
+    }
 
     .temas .visitas {
-        font-size: 14px;
+        font-size: 15px;
+
     }
 
     /* Contenedor meta single post */
@@ -244,8 +257,8 @@ h4 {
         .card {
             padding: 12px;
         }
-        .post-title  {
-            font-size: 1.3rem;
+        .post-title {
+            font-size: 20px;
             text-align: center;
             margin: 0 auto 10px;
         }
