@@ -32,7 +32,7 @@ h4 {
   text-decoration: none;
 }
 
-/* Reset básico */
+/* Menú*/
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -75,6 +75,7 @@ h4 {
         font-size: large;
     }
 
+/* Buscador */
     .navbar-search {
         display: flex;
         align-items: center;
@@ -94,6 +95,7 @@ h4 {
         cursor: pointer;
     }
 
+    /* Botón responsive */
     .nav-toggle {
         display: none;
         background: none;
@@ -120,7 +122,12 @@ h4 {
             position: absolute;
             top: 60px;
             left: 0;
-            border-top: 1px solid #ddd;
+            .image img {
+            object-fit: cover;
+            margin: 0 auto;
+            border-radius: 4px;
+            }
+            /* border-top: 1px solid #ddd; */
             padding: 10px 0;
         }
 
@@ -147,23 +154,142 @@ h4 {
         }
     }
 
-/* FECHA DEL ARTICULO */
-/* .date {
-  font-weight: bold;
-  line-height: normal;
-  background-color: var(--azulgris);
-  padding: 2px;
-  color: var(--blanco);
-} */
+/* Left column */
+    .leftcolumn {
+        float: left;
+        width: 78%;
+        /* Padding left column*/
+        padding-left: 10px;
+    }
 
-.temas {
-    margin-left: 1rem;
+/* Add a card effect for articles */
+    .card {
+        background-color: var(--blanco);
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 0 28px rgba(0, 0, 0, .08);
+        box-shadow: 0 0 28px rgba(0, 0, 0, .08)
+    }
 
-}
+/****PROPIEDADES DEL ARTICULO, TÍTULO, LINK,IMAGEN...*****/
+    .post-header {
+        margin-bottom: 20px;
+    }
 
-.temas .visitas {
-    font-size: 14px;
-}
+    .post-title {
+        font-size: 1.5rem;
+        margin: 0 0 10px;
+        color: #222;
+    }
+
+    .post-title:hover {
+        color: var(--colorPrimario);
+        text-decoration: none;
+    }
+    .post-tema {
+        color: var(--colorPrimario);
+        text-decoration: none;
+    }
+    .post-tema:hover {
+        color: var(--colorSecundario);
+        text-decoration: none;
+    }
+
+    .temas {
+        display: flex;              /* coloca los elementos en línea */
+        align-items: center;        /* centra verticalmente */
+        flex-wrap: nowrap;          /* evita que se parta en varias líneas */
+        gap: 5px;                   /* espacio entre elementos */
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        color: #555;
+        margin-bottom: 10px;
+        overflow: hidden;           /* opcional, evita desbordes */
+        text-overflow: ellipsis;    /* opcional, pone "..." si se corta */
+        white-space: nowrap;        /* fuerza todo en una sola línea */
+    }
+
+    .temas .visitas {
+        font-size: 14px;
+    }
+
+    /* Contenedor meta single post */
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;  /* permite que baje a varias líneas en móviles */
+        gap: 10px;        /* separación entre elementos */
+        font-size: clamp(0.85rem, 2vw, 1rem);
+        color: #777;
+        margin-top: 10px;
+    }
+
+    .post-meta span {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .categoria {
+        font-family: var(--fuenteTitulo);
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+    }
+    .categoria:hover {
+        color: var(--colorPrimario);
+        text-decoration: none;
+    }
+
+    /* 📱 Móviles pequeños */
+    @media (max-width: 480px) {
+        .card {
+            padding: 12px;
+        }
+        .post-title  {
+            font-size: 1.3rem;
+            text-align: center;
+            margin: 0 auto 10px;
+        }
+        .post-meta {
+            flex-direction: column; /* apila en columna */
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .temas {
+            justify-content: center; /* centra horizontalmente */
+            text-align: center;
+        }
+
+        .categoria a {
+            display: block;
+            margin-top: 5px;
+            /* text-align: center; */
+        }
+
+        .post-tema {
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .image img {
+            max-width: 100%;
+        }
+
+        .card a.link {
+            display: block;
+            text-align: center;
+
+        }
+    }
+
+    /* 💻 Pantallas grandes */
+    @media (min-width: 1200px) {
+        .post-meta {
+            font-size: 1rem;
+            gap: 15px;
+        }
+    }
 
 /* ABOUT  */
 /* .portada {
@@ -174,21 +300,6 @@ h4 {
   font-family: Georgia, 'Times New Roman', Times, serif;
   text-align: center;
 } */
-
-/* TITULO PORTADA */
-.titulo {
-  font-size: 60px;
-  margin-bottom: 15px;
-  color: var(--blanco);
-  font-family: var(--fuente);
-}
-
-@media (min-width: 400px) {
-  .titulo {
-    text-align: center;
-    font-size: 60px;
-  }
-}
 
 /* SLIDER PORTADA */
     .swiper {
@@ -212,10 +323,16 @@ h4 {
 
     .slide-title {
         position: absolute;
-        text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+        top: 50%; /* centrado vertical */
+        left: 50%; /* centrado horizontal */
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-family: var(--fuente);
+        font-size: clamp(1rem, 2.5vw, 2rem); /* responsive */
         text-align: center;
-        padding: 0 1rem;
-        /* z-index: 10; */
+        font-weight: bold;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* mejora visibilidad */
+        padding: 0.5rem 1rem;
     }
 
     @media (max-width: 768px) {
@@ -236,23 +353,9 @@ h4 {
         }
     }
 
-/* Left column */
-.leftcolumn {
-  float: left;
-  width: 78%;
 
-  /* Padding left column*/
-  padding-left: 10px;
-}
 
-/* Right column */
-.rightcolumn {
-  float: left;
-  width: 22%;
-  padding-left: 12px;
-  /* Padding right column*/
-  padding-right: 10px;
-}
+
 /*Titulos de la columna derecha*/
 article > h3 {
     margin-top: auto;
@@ -322,7 +425,14 @@ article > h3 {
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
-
+/* Right column */
+    .rightcolumn {
+        float: left;
+        width: 22%;
+        padding-left: 12px;
+        /* Padding right column*/
+        padding-right: 10px;
+    }
 /*formato de los temas */
 #temas {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -386,35 +496,7 @@ article > h3 {
     width: 86%;
   }
 
-/****PROPIEDADES DEL ARTICULO, TÍTULO, LINK,IMAGEN...*****/
-.post-header {
-    margin-bottom: 20px;
-}
 
-.post-title {
-    font-size: 1.5rem;
-    margin: 0 0 10px;
-    color: #222;
-}
-
-.post-meta {
-    font-size: 0.9rem;
-    color: #777;
-}
-
-.post-meta span {
-    display: inline-block;
-    margin-right: 10px;
-}
-.categoria {
-    font-family: Verdana;
-    color: #222;
-    text-decoration: none;
-}
-.categoria:hover {
-    color: var(--colorPrimario);
-    text-decoration: none;
-}
 
 /* Estilo básico para la galería */
     figure {
@@ -517,7 +599,7 @@ article > h3 {
 .text-end {
     text-align: end;
 }
-.titlePost{
+.titlePost {
     font-size: 1.2rem;
     color: #007bff;
     text-decoration: none;
@@ -652,32 +734,46 @@ article > h3 {
 }
 
 /* Fake image post */
-.fakeimg {
-  image-rendering: auto;
-  text-align: center;
-  padding-bottom: 20px;
-}
+    .fakeimg {
+        image-rendering: auto;
+        text-align: center;
+        padding-bottom: 20px;
+    }
 
-.fakeimg img {
-  width: 40%;
-  margin: 0 auto;
-  border-radius: 4px;
-}
+    .fakeimg img {
+        width: 40%;
+        margin: 0 auto;
+        border-radius: 4px;
+    }
 /* Image portada post */
-.image {
-    display: flex;
-    align-items: center;     /* centra verticalmente */
-    justify-content: center; /* centra horizontalmente */
-    width: 100%;
-    text-align: center;
-    padding-bottom: 20px;
-}
+    .image {
+        display: flex;
+        align-items: center;     /* centra verticalmente */
+        justify-content: center; /* centra horizontalmente */
+        width: 100%;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+    .image img {
+        object-fit: cover;
+        margin: 0 auto;
+        border-radius: 4px;
+        }
 
-.image img {
-  object-fit: cover;
-  margin: 0 auto;
-  border-radius: 4px;
-}
+    /* Ajustes para móviles pequeños */
+    @media (max-width: 480px) {
+        .image img {
+            max-width: 100%;  /* que use todo el ancho */
+            border-radius: 2px;
+        }
+    }
+
+    /* Ajustes para tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+        .image img {
+            max-width: 90%; /* un poco de margen a los lados */
+        }
+    }
 
 /* Modal styles */
 .modal {
@@ -765,15 +861,7 @@ article > h3 {
   border-left: 2rem
 }
 
-/* Add a card effect for articles */
-.card {
-   background-color: var(--blanco);
-   padding: 15px;
-   margin-top: 10px;
-   border-radius: 10px;
-    -webkit-box-shadow: 0 0 28px rgba(0, 0, 0, .08);
-    box-shadow: 0 0 28px rgba(0, 0, 0, .08)
-}
+
 
 
 /******* CONTACTO *******/

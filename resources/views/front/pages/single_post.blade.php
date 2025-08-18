@@ -9,7 +9,7 @@
             <h2 class="post-title">{{$post->title}}</h2>
             <div class="post-meta">
                 <span class="post-date">Publicat el: {{date_format($post->created_at,'d/m/Y')}}</span>
-                <span class="post-category">Categoría: <a class="categoria" href="{{ route('category', $post->post_category->slug) }}" title="">{{$post->post_category->name}}</a></span>
+                <span>Categoría: <a class="categoria" href="{{ route('category', $post->post_category->slug) }}" title="">{{$post->post_category->name}}</a></span>
                 <span class="post-read-time">Temps de lectura: {{readDuration($post->title, $post->content)}} @choice('min|mins', readDuration($post->title, $post->content))</span>
             </div>
         </header>
@@ -28,7 +28,7 @@
             <div id="gallery">
                 <div class="gallery-container">
                     @foreach ($post->images as $image)
-                        <figure class="gallery-item">
+                        <figure class="gallery-item" id="myImg" onclick="openModal(this)">
                             <img src="{{ asset('images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}">
                         </figure>
                     @endforeach
@@ -101,4 +101,5 @@
             </div>
         </div>
     @endif
+    <script src="{{ asset('front/js/slider.js') }}"></script>
 @endsection
