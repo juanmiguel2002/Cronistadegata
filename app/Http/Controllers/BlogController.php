@@ -50,7 +50,7 @@ class BlogController extends Controller
         $posts = Post::where('visibility', 1)->orderBy('created_at','desc')->paginate((int) $paginationLimit);
 
         $data = [
-            'pageTitle' => $title,
+            'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
             'posts' => $posts,
         ];
         return view('front.pages.index', $data);
@@ -70,7 +70,7 @@ class BlogController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
 
         $data = [
-            'pageTitle' => $category->name,
+            'pageTitle' => $category->name . ' - Cronista de Gata de Gorgos',
             'posts' => $posts
         ];
         return view('front.pages.category_posts', $data);
@@ -182,7 +182,7 @@ class BlogController extends Controller
         SEOTools::opengraph()->addImage(asset('images/posts'. $post->featured_image));
 
         $data = [
-            'pageTitle' => $title,
+            'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
             'post' => $post,
             'relatedPosts' => $relatedPosts,
             'nextPost' => $nextPost,
@@ -194,7 +194,7 @@ class BlogController extends Controller
 
     public function showDestacats()
     {
-        $title = 'Destacats';
+        $title = 'Destacats - Cronista de Gata de Gorgos';
         $description = 'Artícles més visitats del Cronista de Gata de Gorgos';
 
         SEOTools::setTitle($title, false);
@@ -215,7 +215,7 @@ class BlogController extends Controller
     }
 
     public function contactPage() {
-        $title = 'Contacte';
+        $title = 'Contacte - Cronista de Gata de Gorgos';
         $description = 'Contacta amb nosaltres per a qualsevol dubte o consulta.';
 
         // Meta SEO
@@ -224,7 +224,7 @@ class BlogController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
 
         $data = [
-            'pageTitle' => $title,
+            'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
         ];
         return view('front.pages.contact', $data);
     }
