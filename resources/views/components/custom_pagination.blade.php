@@ -44,5 +44,48 @@
                 </li>
             @endif
         </ul>
+        {{-- Paginación simplificada (solo móvil) --}}
+        <ul class="pagination-simple">
+            {{-- Botón "Anterior" --}}
+            @if ($paginator->onFirstPage())
+                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            @else
+                <li class="page-item"><a class="page-link" href="{{ $paginator->previousPageUrl() }}">&laquo;</a></li>
+            @endif
+
+            {{-- Página 1 --}}
+            <li class="page-item {{ $paginator->currentPage() == 1 ? 'active' : '' }}">
+                <a class="page-link" href="{{ $paginator->url(1) }}">1</a>
+            </li>
+
+            {{-- "..." si hace falta --}}
+            @if ($paginator->currentPage() > 3)
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            @endif
+
+            {{-- Página actual (si no es primera ni última) --}}
+            @if ($paginator->currentPage() > 1 && $paginator->currentPage() < $paginator->lastPage())
+                <li class="page-item active"><span class="page-link">{{ $paginator->currentPage() }}</span></li>
+            @endif
+
+            {{-- "..." si hace falta --}}
+            @if ($paginator->currentPage() < $paginator->lastPage() - 2)
+                <li class="page-item disabled"><span class="page-link">…</span></li>
+            @endif
+
+            {{-- Última página --}}
+            @if ($paginator->lastPage() > 1)
+                <li class="page-item {{ $paginator->currentPage() == $paginator->lastPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a>
+                </li>
+            @endif
+
+            {{-- Botón "Siguiente" --}}
+            @if ($paginator->hasMorePages())
+                <li class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}">&raquo;</a></li>
+            @else
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            @endif
+        </ul>
     @endif
 </div>

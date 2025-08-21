@@ -945,3 +945,17 @@ ul {
     font-size: 16px; /* Tamaño de fuente */
     color: #000000; /* Color de texto */
 }
+
+.pagination-simple {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    ul.pagination  {
+        display: none !important;
+    }
+    .pagination-simple {
+        display: flex !important;
+        justify-content: center;
+    }
+}
