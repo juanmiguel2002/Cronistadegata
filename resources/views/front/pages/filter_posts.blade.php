@@ -36,7 +36,7 @@
         @endforeach
     @else
         <div class="card">
-            <h3>No cap article amb el filtre seleccionat.</h3>
+            <h3>No hi ha cap article amb el filtre seleccionat.</h3>
         </div>
     @endif
 
