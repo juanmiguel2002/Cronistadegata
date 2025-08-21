@@ -32,6 +32,19 @@ h4 {
   text-decoration: none;
 }
 
+/*Flecha hacia arriba*/
+.ir-arriba {
+  display: none;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  color:var(--colorPrimario);
+  cursor: pointer;
+  position: fixed;
+  bottom: 12px;
+  right: 10px;
+  z-index: 2;
+}
+
 /* Menú*/
     .navbar {
         display: flex;
@@ -837,10 +850,6 @@ article > h3 {
     color: #ccc;
     font-size: 18px;
 }
-
-
-/* Estilos responsivos */
-
 
 /* TEXTO ARTICULO CENTER */
 .texto {
