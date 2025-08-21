@@ -8,9 +8,9 @@
     <div class="swiper-wrapper">
         @foreach ($slides as $slide)
             <div class="swiper-slide">
-                <img src="{{ asset('storage/' . $slide->image_path) }}" alt="Slide Image">
+                <img src="{{ asset('storage/' . $slide->image_path) }}" alt="{{ $slide->title }}">
                 @if ($slide->title)
-                    <div class="slide-title titulo">{{ $slide->title }}</div>
+                    <div class="slide-title">{{ $slide->title }}</div>
                 @endif
             </div>
         @endforeach
