@@ -108,7 +108,7 @@ h4 {
         cursor: pointer;
     }
 
-    /* Botón responsive */
+/* Botón responsive */
     .nav-toggle {
         display: none;
         background: none;
@@ -195,11 +195,11 @@ h4 {
         margin: 0 0 10px;
         color: #222;
     }
-
     .post-title:hover {
         color: var(--colorPrimario);
         text-decoration: none;
     }
+
     .post-tema {
         color: var(--colorPrimario);
         font-family: var(--fuenteTitulo);
@@ -369,7 +369,7 @@ h4 {
         transform: translate(-50%, -50%);
         color: #fff;
         font-family: var(--fuente);
-        font-size: clamp(1rem, 2.5vw, 2rem); /* responsive */
+        font-size: 50px; /* responsive */
         text-align: center;
         font-weight: bold;
         text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* mejora visibilidad */
@@ -387,7 +387,7 @@ h4 {
 
     @media (max-width: 480px) {
         .slide-title {
-            font-size: 1rem;
+            font-size: 25px;
         }
         .swiper {
             max-height: 200px;

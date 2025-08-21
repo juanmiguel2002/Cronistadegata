@@ -3,7 +3,7 @@
 @section('content')
     <div class="login-box bg-white box-shadow border-radius-10">
         <div class="login-title">
-            <h2 class="text-center text-primary">Login</h2>
+            <h2 class="text-center text-primary">Entrar </h2>
         </div>
         <form action="{{ route('admin.login_handler') }}" method="POST">
 
@@ -33,7 +33,7 @@
                 <div class="col-6">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="remember" name="remember" wire:model="remember">
-                        <label class="custom-control-label" for="remember">Remember</label>
+                        <label class="custom-control-label" for="remember">Recordar</label>
                     </div>
                 </div>
                 <div class="col-6">
@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="input-group mb-0">
-                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Entrar">
                     </div>
                 </div>
             </div>
