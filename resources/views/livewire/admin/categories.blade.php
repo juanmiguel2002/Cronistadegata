@@ -22,7 +22,9 @@
                             @forelse ($parentCategories as $item)
                                 <tr data-index="{{$item->id}}" data-order="{{$item->order}}">
                                     <td>{{$item->id}}</td>
-                                    <td>{{$item->name}}</td>
+                                    <td>
+                                        <a style="cursor: pointer" href="{{ route('admin.posts', ['category'=>$item->id]) }}">{{$item->name}}</a>
+                                    </td>
                                     <td>{{ $item->categoria->count() }}</td>
                                     <td>
                                         <div class="table-actions">
@@ -72,7 +74,7 @@
                             @forelse ($categories as $item)
                                 <tr data-index="{{$item->id}}" data-order="{{$item->order}}">
                                     <td>{{$item->id}}</td>
-                                    <td>{{$item->name}}</td>
+                                    <td><a style="cursor: pointer" href="{{ route('admin.posts', ['category'=>$item->id]) }}">{{$item->name}}</a></td>
                                     <td>{{ $item->parentCategory ? $item->parentCategory->name : 'Sin categoría'}}</td>
                                     <td>{{$item->posts->count()}}</td>
                                     <td>

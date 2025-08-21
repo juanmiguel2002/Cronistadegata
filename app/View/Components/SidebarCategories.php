@@ -2,6 +2,8 @@
 
 namespace App\View\Components;
 
+use App\Models\Category;
+use App\Models\ParentCategory;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -14,6 +16,7 @@ class SidebarCategories extends Component
     public function __construct()
     {
         //
+
     }
 
     /**
@@ -21,6 +24,18 @@ class SidebarCategories extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.sidebar-categories');
+        $pcategories = ParentCategory::query()
+            ->with([
+                'categoria' => function ($q) {
+                    $q->withCount('posts')->orderBy('name');
+                },
+            ])
+            ->orderBy('name')
+            ->get();
+
+        // Categorías sin padre
+        $categories = Category::whereHas('posts')->where('parent', 0)->orderBy('name', 'asc')->get();
+
+        return view('components.sidebar-categories', compact('pcategories', 'categories'));
     }
 }

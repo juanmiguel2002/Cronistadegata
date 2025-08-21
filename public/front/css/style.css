@@ -487,6 +487,7 @@ article > h3 {
         border-radius: 4px;
         cursor: pointer;
         transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        flex-wrap: wrap;          /* Evita que el texto se divida en varias líneas */
     }
 
     #temas li a {
@@ -520,6 +521,40 @@ article > h3 {
         background-color: white;
         color: var(--azulgris);
     }
+
+    #temas > li {
+        position: relative;
+        margin: 10px 0;
+        padding: 12px 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .accordion {
+        width: 100%;
+        background: none;
+        border: none;
+        text-align: left;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 8px;
+        color: #2c3e50;
+    }
+    .accordion:hover { color: #fff; }
+
+    .children {
+        display: none;
+        margin: 0;
+        padding-left: 15px;
+    }
+    .children li a {
+        color: #495057;
+        text-decoration: none;
+        font-size: 0.95rem;
+    }
+    .children li a:hover { color: var(--azulgris); }
 
 /*foto links Redes Sociales*/
 .foto {
