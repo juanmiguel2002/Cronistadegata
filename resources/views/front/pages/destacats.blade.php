@@ -26,13 +26,13 @@
                     @endphp
 
                     @if (file_exists($imagePath))
-                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" >
+                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy" >
                     @else
-                        <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)">
+                        <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
                     @endif
                 </div>
 
-                {!!Str::ucfirst(words($post->content, 65))!!}
+                {!!Str::ucfirst(words($post->content, 62))!!}
                 <a class="link post-tema" href="{{ route('post', $post->slug) }}">Llegir més</a>
             </article>
         @endforeach

@@ -46,7 +46,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Full Name</label>
+                                                <label>Nom complet</label>
                                                 <input  wire:model='name' type="text" class="form-control" placeholder="Full Name">
                                                 @error('name')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Username</label>
+                                                <label>Usuari</label>
                                                 <input  wire:model='username'  type="username" class="form-control" placeholder="Username">
                                                 @error('username')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
                                     </div>
                                 </form>
                             </div>
@@ -120,7 +120,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Update password</button>
+                                    <button type="submit" class="btn btn-primary">Actualitzar contrasenya</button>
                                 </form>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Update </button>
+                                    <button type="submit" class="btn btn-primary">Actualitzar </button>
                                 </form>
                             </div>
                         </div>

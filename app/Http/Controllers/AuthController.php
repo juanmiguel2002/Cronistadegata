@@ -38,8 +38,8 @@ class AuthController extends Controller
                 'remember' => 'sometimes|boolean',
             ],
             [
-                'login_id.required' => 'Enter your email or username.',
-                'password.required' => 'Password is required.',
+                'login_id.required' => 'Introduzca su correo electrónico o usuario.',
+                'password.required' => 'La contraseña es requerida.',
             ]
         );
 
@@ -62,8 +62,8 @@ class AuthController extends Controller
                 $request->session()->regenerateToken();
 
                 $msg = Auth::user()->status === UserStatus::Inactive
-                    ? 'Your account is inactive.'
-                    : 'Your account is Pending.';
+                    ? 'Su cuenta está inactiva.'
+                    : 'Su cuenta está pendiente.';
 
                 return redirect()->route('admin.login')
                     ->withInput()
@@ -75,7 +75,7 @@ class AuthController extends Controller
 
         return redirect()->route('admin.login')
             ->withInput()
-            ->with('fail', 'Incorrect password.');
+            ->with('fail', 'Contraseña incorrecta.');
     }
 
     /**
@@ -86,12 +86,12 @@ class AuthController extends Controller
         if ($fieldType === 'email') {
             request()->validate(
                 ['login_id' => 'exists:users,email'],
-                ['login_id.exists' => 'No account found for this email address.']
+                ['login_id.exists' => 'No se encontró ninguna cuenta con esta dirección de correo electrónico.']
             );
         } else {
             request()->validate(
                 ['login_id' => 'exists:users,username'],
-                ['login_id.exists' => 'No account found for this username.']
+                ['login_id.exists' => 'No se encontró ninguna cuenta para este nombre de usuario.']
             );
         }
     }
@@ -127,6 +127,6 @@ class AuthController extends Controller
         }
         $link = route('admin.reset', $token);
         $user->sendPasswordResetNotification($user->createToken());
-        return redirect()->route('admin.forgot')->with('success', 'Password reset link sent to your email.');
+        return redirect()->route('admin.forgot')->with('success', 'Enlace de restablecimiento de contraseña enviado a su correo electrónico.');
     }
 }

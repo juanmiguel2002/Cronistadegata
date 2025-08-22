@@ -61,9 +61,8 @@ class BlogController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
 
         $posts = Post::where('category', $category->id)->orderBy('created_at','desc')->paginate(8);
-        $title = $category->name;
-        $description = 'Browse the latest articles in the'. $category->name.
-            ' category. Stay wpdated with articles, insights and tutorials';
+        $title = $category->name . ' - Cronista de Gata de Gorgos';
+        $description = 'Articuls de la categoria '. $category->name;
 
         // Meta SEO
         SEOTools::setTitle($title, false);
@@ -90,14 +89,14 @@ class BlogController extends Controller
             $posts = $postsQuery->where('visibility', 1)
                                 ->orderBy('created_at','desc')
                                 ->paginate(10);
-            $title = 'Resultas de la búsqueda';
+            $title = 'Resultas de la búsqueda: "'. $query. '"';
             $description = 'Resultados de la búsqueda para "'. $query. '"';
 
         } else {
             $posts = collect();
 
             $title = 'Search'. $query;
-            $description = 'Search results for blog posts on our website.';
+            $description = 'Resultados de búsqueda de publicaciones de blog en nuestro sitio web.';
         }
         // Meta SEO
         SEOTools::setTitle($title, false);

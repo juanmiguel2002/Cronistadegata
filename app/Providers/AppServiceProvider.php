@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Authenticate::redirectUsing(function(){
-            Session::flash('fail', 'You are not logged in');
+            Session::flash('fail', 'No has iniciado sesión. Por favor, inicia sesión para continuar.');
             return route('admin.login');
         });
 
