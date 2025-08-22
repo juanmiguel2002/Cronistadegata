@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [BlogController::class, 'index'])->name('home');
 Route::get('/post/{slug}', [BlogController::class, 'showPost'])->name('post');
 Route::get('/posts/category/{slug}', [BlogController::class, 'showCategory'])->name('category');
-Route::get('/parent-category/{slug}', [BlogController::class, 'showParentCategory'])
-    ->name('parent-category');
 Route::get('/search', [BlogController::class, 'showSearch'])->name('search');
 Route::get('/posts/filter', [BlogController::class, 'filterPosts'])->name('posts.filter');
 Route::get('/posts/destacats', [BlogController::class, 'showDestacats'])->name('destacats');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactoMail;
 use App\Models\Category;
+use App\Models\ParentCategory;
 use App\Models\Post;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
@@ -70,7 +71,7 @@ class BlogController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
 
         $data = [
-            'pageTitle' => $category->name . ' - Cronista de Gata de Gorgos',
+            'pageTitle' => $category->name,
             'posts' => $posts
         ];
         return view('front.pages.category_posts', $data);
