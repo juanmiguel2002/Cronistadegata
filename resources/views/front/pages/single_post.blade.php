@@ -39,6 +39,15 @@
                 </nav>
             </div>
         @endif
+        <div class="share-buttons-container">
+            <div class="share-list">
+                <!-- FACEBOOK -->
+                <a class="fb-h" onclick="return fbs_click()" target="_blank">
+                    <img src="{{ asset('front/img/facebook-logo.png') }}" alt="Facebook">
+                    <span class="button-text">Compartir</span>
+                </a>
+            </div>
+        </div>
         <x-modal />
     </article>
     <div class="prev-next-posts mt-4 mb-4 p-3">
@@ -102,4 +111,14 @@
         </div>
     @endif
     <script src="{{ asset('front/js/slider.js') }}"></script>
+    <script>
+        function fbs_click() {
+            u = location.href;
+            t = document.title;
+            window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t),
+                'sharer',
+                'toolbar=0,status=0,width=626,height=436');
+            return false;
+        }
+    </script>
 @endsection

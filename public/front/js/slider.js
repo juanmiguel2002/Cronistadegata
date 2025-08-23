@@ -39,3 +39,10 @@ startAutoplay(5000);
 document.querySelectorAll('.nav-button').forEach(button => {
     button.addEventListener('click', stopAutoplay);
 });
+
+// var pageLink = "{{ url()->current() }}";
+// var pageTitle = "{{ addslashes($post->title) }}";
+// function fbs_click() {
+//     window.open(`http://www.facebook.com/sharer.php?u=${pageLink}&quote=${pageTitle}`, 'sharer', 'toolbar=0,status=0,width=626,height=436');
+//     return false;
+// }

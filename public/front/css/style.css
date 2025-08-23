@@ -1009,3 +1009,30 @@ ul {
         justify-content: center;
     }
 }
+.share-buttons-container {
+    display: flex;
+    justify-content: flex-start; /* Alinea a la izquierda */
+    margin-top: 40px;
+}
+
+.share-list {
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.fb-h {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.fb-h img {
+    width: 40px; /* Ajusta el tamaño del icono según tus necesidades */
+    height: auto;
+
+}
+
+.button-text {
+    margin-left: 10px; /* Ajusta el espacio entre el icono y el texto según tus necesidades */
+    font-size: 14px; /* Ajusta el tamaño del texto según tus necesidades */
+}

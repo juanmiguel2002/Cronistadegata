@@ -51,7 +51,18 @@ class PostController extends Controller
             'category' => 'required|exists:categories,id',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp'
-        ]);
+        ], [
+            'title.required' => 'El títol és obligatori.',
+            'title.unique' => 'El títol ja existeix. Si us plau, trieu un altre títol.',
+            'title.max' => 'El títol no pot tenir més de 255 caràcters.',
+            'category.required' => 'La categoria és obligatòria.',
+            'category.exists' => 'La categoria seleccionada no és vàlida.',
+            'featured_image.image' => 'El fitxer de la imatge destacada ha de ser una imatge.',
+            'featured_image.mimes' => 'La imatge destacada ha de ser un fitxer de tipus: jpeg, png, jpg, gif, svg, webp.',
+            'images.*.image' => 'Tots els fitxers de la galeria han de ser imatges.',
+            'images.*.mimes' => 'Les imatges de la galeria han de ser fitxers de tipus: jpeg, png, jpg, gif, svg, webp.'
+            ]
+        );
         $path = 'images/posts/';
         $resized_image = $path. 'resized/';
 
@@ -83,7 +94,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->category = $request->category;
         $post->content = $request->content;
-        $post->visibility = $request->visibility;   
+        $post->visibility = $request->visibility;
         $post->featured_image = $imageName ?? null;
         $post->slug = Str::slug($request->title);
         $save = $post->save();
