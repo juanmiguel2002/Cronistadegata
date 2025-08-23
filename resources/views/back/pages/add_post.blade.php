@@ -43,7 +43,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for=""><b>Títol</b></label>
-                            <input type="text" name="title" id="title" class="form-control" placeholder="Títol article" required>
+                            <input type="text" name="title" id="titulo" class="form-control" placeholder="Títol article" required oninput="contarCaracteres()">
+                            <small class="text-sm text-gray-500 mt-1">
+                                Caracteres: <span id="contador">0</span>/255    
+                            </small>
                             <small class="text-danger text-error title_error"></small>
                         </div>
                         <div class="form-group">
@@ -170,5 +173,10 @@
         .catch( error => {
             console.error( error );
         });
+        function contarCaracteres() {
+            const input = document.getElementById("titulo");
+            const contador = document.getElementById("contador");
+            contador.textContent = input.value.length;
+        }
     </script>
 @endpush
