@@ -28,8 +28,8 @@
             <div id="gallery">
                 <div class="gallery-container">
                     @foreach ($post->images as $image)
-                        <figure class="gallery-item" id="myImg" onclick="openModal(this)">
-                            <img src="{{ asset('images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}">
+                        <figure class="gallery-item" >
+                            <img src="{{ asset('images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)">
                         </figure>
                     @endforeach
                 </div>
