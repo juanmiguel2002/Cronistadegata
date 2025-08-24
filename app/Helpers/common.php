@@ -4,6 +4,7 @@ use App\Models\Category;
 use App\Models\GeneralSettings;
 use App\Models\ParentCategory;
 use App\Models\Post;
+use App\Models\UserSocialLink;
 use Illuminate\Support\Str;
 
 if (!function_exists('settings')) {
@@ -70,7 +71,4 @@ if (!function_exists('category')) {
                     ->get();
     }
 }
-
-
-
 ?>

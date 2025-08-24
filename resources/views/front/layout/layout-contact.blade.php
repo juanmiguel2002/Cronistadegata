@@ -6,6 +6,7 @@
     @yield('meta_tags')
     <title>@yield('pageTitle')</title>
     <link rel="stylesheet" href="{{ asset('front/css/contact.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('front/css/footer.css') }}">
     <link rel="shortcut icon" href="{{ asset('storage/'. settings()->site_favicon) }}" type="image/jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('front/vendors/styles/icon-font.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -22,9 +24,7 @@
         @yield('main')
     </main>
 
-    <footer>
-        <h4>© Copyright 2025 <a href="/">Cronistadegata</a> | Creado por <a href="cronista.blog">Cronista.blog</a></h4>
-    </footer>
+    <x-footer />
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

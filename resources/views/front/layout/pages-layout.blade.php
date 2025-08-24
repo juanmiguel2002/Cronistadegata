@@ -6,6 +6,8 @@
     @yield('meta_tags')
     <title>@yield('pageTitle')</title>
     <link href="{{ asset('front/css/style.css') }}" rel="stylesheet" type='text/css' />
+    <link href="{{ asset('front/css/footer.css') }}" rel="stylesheet" type='text/css' />
+
     <link rel="shortcut icon" href="{{ asset('storage/'. settings()->site_favicon) }}" type="image/jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,23 +34,26 @@
             <!--Temes-->
             <x-sidebar-categories />
 
-            {{-- <article class="card">
-                <h3>Enllaços</h3><br>
+            <!--Enllaços-->
+            <article class="card">
+                <h3>Enllaços</h3>
                 <div class="social">
                     <a title="Facebook" href="https://www.facebook.com/cronista.degata.5" target="_blank">
-                        <img src="img/facebook-logo.png" class="foto" alt="Facebook">
+                        <img src="front/img/facebook-logo.png" class="foto" alt="Facebook">
                     </a>
                     <a title="Instagram" href="https://www.instagram.com/cronistagata/" target="_blank">
-                        <img src="img/instagram.png" class="foto" alt="Instagram" />
+                        <img src="front/img/instagram.png" class="foto" alt="Instagram" />
+                    </a>
+                    <a title="Betlem" href="https://betlemmonumental.es/" target="_blank">
+                        <img src="{{ asset('front/img/belen2.png') }}" class="foto" alt="Betlem Monumental Gata" />
                     </a>
                 </div>
-            </article> --}}
+            </article>
         </section>
     </main>
 
-    <footer>
-        <h4>© Copyright 2025 <a href="/">Cronistadegata</a> | By Juanmi</h4>
-    </footer>
+    <x-footer />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
