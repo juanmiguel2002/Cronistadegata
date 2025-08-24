@@ -35,7 +35,6 @@ class AuthController extends Controller
             [
                 'login_id' => 'required',
                 'password' => 'required|min:5',
-                'remember' => 'sometimes|boolean',
             ],
             [
                 'login_id.required' => 'Introduzca su correo electrónico o usuario.',
@@ -51,10 +50,9 @@ class AuthController extends Controller
             $fieldType => $request->login_id,
             'password' => $request->password,
         ];
-        $remember = $request->boolean('remember'); // true si checkbox está marcado
 
         // Intentar autenticar con remember
-        if (Auth::attempt($creds, $remember)) {
+        if (Auth::attempt($creds)) {
             // Revisar status del usuario
             if (in_array(Auth::user()->status, [UserStatus::Inactive, UserStatus::Pending])) {
                 Auth::logout();

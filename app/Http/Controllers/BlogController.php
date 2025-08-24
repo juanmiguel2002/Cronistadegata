@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\ParentCategory;
 use App\Models\Post;
 use App\Models\Setting;
+use App\Models\UserSocialLink;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
@@ -222,9 +223,11 @@ class BlogController extends Controller
         SEOTools::setTitle($title, false);
         SEOTools::setDescription($description);
         SEOTools::opengraph()->setUrl(url()->current());
-
+        $user = UserSocialLink::where('user_id', 2)->get();
+       
         $data = [
             'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
+            'user' => $user
         ];
         return view('front.pages.contact', $data);
     }
@@ -236,7 +239,7 @@ class BlogController extends Controller
             'message' => 'nullable|string|max:5000',
         ]);
 
-        Mail::to('juanmi0802@gmail.com')->send(new ContactoMail($datos));
+        Mail::to('gatadegorgos@cronista.blog')->send(new ContactoMail($datos));
 
         return redirect()->back()->with('success', 'El teu missatge s\'ha enviat correctament.');
     }

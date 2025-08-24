@@ -20,8 +20,8 @@
 
                 <h5 class="mt-4">Xarxes socials</h5>
                 <div class="social-icons mt-2">
-                    <a href="https://www.facebook.com/cronista.degata"><i class="bi bi-facebook me-3"></i></a>
-                    <a href="#"><i class="bi bi-instagram me-3"></i></a>
+                    <a href="{{$user[0]->facebook_url}}"><i class="bi bi-facebook me-3"></i></a>
+                    <a href="{{$user[0]->instagram_url}}"><i class="bi bi-instagram me-3"></i></a>
                 </div>
             </div>
 
