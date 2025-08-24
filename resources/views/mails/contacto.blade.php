@@ -8,7 +8,7 @@
     <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border: 1px solid #dddddd;">
         <tr>
             <td align="center">
-                <img src="https://gatadegorgos.cronista.blog/img/icon.png" alt="Logo" style="max-height: 50px; margin-bottom: 20px;">
+                <img src="{{ asset('front/img/periodic1.jpg') }}" alt="Logo" style="max-height: 50px; margin-bottom: 20px;">
             </td>
         </tr>
         <tr>
@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td style="padding-top: 30px; font-size: 12px; color: #777; text-align: center;">
-                Este mensaje ha sido enviado desde tu sitio web.
+                Este mensaje ha sido enviado desde Cronista de Gata .
             </td>
         </tr>
     </table>
