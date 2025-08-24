@@ -568,6 +568,12 @@ article > h3 {
     width: 50px;
 }
 
+.social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+}
 .social a {
     text-decoration: none;
 }

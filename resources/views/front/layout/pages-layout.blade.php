@@ -39,10 +39,10 @@
                 <h3>Enllaços</h3>
                 <div class="social">
                     <a title="Facebook" href="https://www.facebook.com/cronista.degata.5" target="_blank">
-                        <img src="front/img/facebook-logo.png" class="foto" alt="Facebook">
+                        <img src="{{ asset('front/img/facebook-logo.png') }}" class="foto" alt="Facebook">
                     </a>
                     <a title="Instagram" href="https://www.instagram.com/cronistagata/" target="_blank">
-                        <img src="front/img/instagram.png" class="foto" alt="Instagram" />
+                        <img src="{{ asset('front/img/instagram.png') }}" class="foto" alt="Instagram" />
                     </a>
                     <a title="Betlem" href="https://betlemmonumental.es/" target="_blank">
                         <img src="{{ asset('front/img/belen2.png') }}" class="foto" alt="Betlem Monumental Gata" />
