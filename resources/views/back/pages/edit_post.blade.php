@@ -51,19 +51,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="card card-box mb-2">
-                    <div class="card-header weight-500">SEO</div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for=""><span>Post meta Keywords:</span> <small>(Separados por coma.)</small></label>
-                            <textarea name="meta_keywords" cols="30" rows="10" class="form-control" placeholder="Enter post meta keywords..." >{!!$post->meta_keywords!!}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for=""><span>Post meta description:</span></label>
-                            <textarea name="meta_descripcion" cols="30" rows="10" class="form-control" placeholder="Enter post meta description..." >{!!$post->meta_description!!}</textarea>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
             <div class="col-md-3">
                 <div class="card card-box mb-2">
@@ -81,7 +68,7 @@
                             <small class="text-danger error-text featured_image_error"></small>
                         </div>
                         <div class="d-block mb-3" style="max-width: 250px">
-                            <img src="/images/posts/resized/resized_{{$post->featured_image}}" alt="" id="preview-featured-image" class="img-thumbnail" >
+                            <img src="{{ asset('storage/images/posts/resized/resized_' . $post->featured_image)}}" alt="" id="preview-featured-image" class="img-thumbnail" >
                         </div>
                         {{-- <div class="form-group">
                             <label for=""><span>Tags:</span></label>
@@ -109,9 +96,9 @@
         </div>
     </form>
 @endsection
-@push('styles')
+{{-- @push('styles')
     <link rel="stylesheet" href="/back/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
-@endpush
+@endpush --}}
 @push('scripts')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>

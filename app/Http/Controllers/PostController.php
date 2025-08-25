@@ -63,7 +63,7 @@ class PostController extends Controller
             'images.*.mimes' => 'Les imatges de la galeria han de ser fitxers de tipus: jpeg, png, jpg, gif, svg, webp.'
             ]
         );
-        $path = 'images/posts/';
+        $path = 'storage/images/posts/';
         $resized_image = $path. 'resized/';
 
         if ($request->hasFile('featured_image')) {
@@ -78,9 +78,9 @@ class PostController extends Controller
             }
 
             // thumbnail
-            Image::make($path. $imageName)
-                ->fit(250,250)
-                ->save($resized_image . 'thumb_'. $imageName);
+            // Image::make($path. $imageName)
+            //     ->fit(250,250)
+            //     ->save($resized_image . 'thumb_'. $imageName);
 
             // resized
             Image::make($path. $imageName)
@@ -98,9 +98,11 @@ class PostController extends Controller
         $post->featured_image = $imageName ?? null;
         $post->slug = Str::slug($request->title);
         $save = $post->save();
+
         // Guardar imágenes adicionales para el carrusel
-        $image_path = 'images/posts/carousel/';
+        $image_path = 'storage/images/posts/carousel/';
         $resized_imagen = $image_path . 'resized/';
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $name = time() . '_' . preg_replace('/\s+/', '_', $image->getClientOriginalName());
@@ -110,10 +112,7 @@ class PostController extends Controller
                     File::makeDirectory($resized_imagen, 0777,true,true);
                 }
 
-                Image::make($path . $name)
-                    ->fit(250, 250)
-                    ->save($resized_imagen . 'thumb_' . $name);
-
+                // resized
                 Image::make($path . $name)
                     ->fit(1024, 640)
                     ->save($resized_imagen . 'resized_' . $name);
@@ -193,7 +192,7 @@ class PostController extends Controller
 
         if ($request->hasFile('featured_image')) {
             $old_image = $post->featured_image;
-            $path = 'images/posts/';
+            $path = 'storage/images/posts/';
             $file = $request->file('featured_image');
             $new_imageName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
             $upload = $file->move(public_path($path), $new_imageName);
