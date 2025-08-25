@@ -17,7 +17,7 @@
                 </h5>
                 <div class="image">
                     @php
-                        $imagePath = public_path('images/posts/resized/resized_' . $post->featured_image);
+                        $imagePath = asset('images/posts/resized/resized_' . $post->featured_image);
                         $imageUrl = asset('images/posts/resized/resized_' . $post->featured_image);
                     @endphp
 
