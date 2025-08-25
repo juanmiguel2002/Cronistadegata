@@ -55,7 +55,7 @@
                         <tr>
                             <td scope="row">{{$post->id}}</td>
                             <td>
-                                <img src="/images/posts/{{$post->featured_image}}" width="100">
+                                <img src="{{ asset('storage/images/posts/' . $post->featured_image)}}" width="100">
                             </td>
                             <td><a href="{{ route('post', ['slug'=>$post->slug]) }}" target="_black">{{ $post->title }}</a></td>
                             <td>{{ $post->user->name }}</td>

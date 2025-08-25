@@ -21,14 +21,14 @@
 
                 <div class="fakeimg">
                     @php
-                        $imagePath = public_path('images/posts/resized/resized_' . $post->featured_image);
-                        $imageUrl = asset('images/posts/resized/resized_' . $post->featured_image);
+                        $imagePath = storage_path('app/public/images/posts/resized/resized_' . $post->featured_image);
+                        $imageUrl  = asset('storage/images/posts/resized/resized_' . $post->featured_image);
                     @endphp
 
                     @if (file_exists($imagePath))
-                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy" >
+                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
                     @else
-                        <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
+                        <img src="{{ asset('storage/images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
                     @endif
                 </div>
 

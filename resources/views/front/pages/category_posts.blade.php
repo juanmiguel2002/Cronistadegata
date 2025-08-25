@@ -13,7 +13,7 @@
                     <i class="ti-timer mr-1"> </i> {{readDuration($post->title, $post->content)}} @choice('min|mins', readDuration($post->title, $post->content))
                 </h5>
                 <div class="fakeimg">
-                    <img src="{{ asset('images/posts/'.$post->featured_image) }}" alt="{{$post->featured_image}}" loading="lazy">
+                    <img src="{{ asset('storage/images/posts/'.$post->featured_image) }}" alt="{{$post->featured_image}}" loading="lazy">
                 </div>
                 {!!Str::ucfirst(words($post->content, 60))!!}
                 <a class="link post-tema" href="{{ route('post', $post->slug) }}">Llegir més</a>

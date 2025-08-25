@@ -16,15 +16,16 @@
             </h5>
             <div class="image">
                 @php
-                    $imagePath = public_path('images/posts/resized/resized_' . $post->featured_image);
-                    $imageUrl = asset('images/posts/resized/resized_' . $post->featured_image);
+                    $imagePath = storage_path('app/public/images/posts/resized/resized_' . $post->featured_image);
+                    $imageUrl  = asset('storage/images/posts/resized/resized_' . $post->featured_image);
                 @endphp
 
                 @if (file_exists($imagePath))
                     <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
                 @else
-                    <img src="{{ asset('images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
+                    <img src="{{ asset('storage/images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
                 @endif
+
             </div>
             {!!Str::ucfirst(words($post->content, 60))!!}
             <a class="link post-tema" href="{{ route('post', $post->slug) }}">Llegir més</a>
