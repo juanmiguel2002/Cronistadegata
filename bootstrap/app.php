@@ -20,9 +20,5 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-
-        if ($exceptions instanceof ModelNotFoundException || $exceptions instanceof NotFoundHttpException) {
-            return response()->view('errors.404', [], 404);
-        }
         //
     })->create();
