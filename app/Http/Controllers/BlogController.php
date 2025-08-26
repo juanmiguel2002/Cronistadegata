@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\UserSocialLink;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Artesaos\SEOTools\OpenGraph;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -180,7 +181,7 @@ class BlogController extends Controller
         SEOTools::setDescription($description);
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'article');
-        SEOTools::opengraph()->addImage(asset('images/posts'. $post->featured_image));
+        SEOTools::opengraph()->addImage(asset('storage/images/posts'. $post->featured_image));
 
         $data = [
             'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
@@ -224,7 +225,7 @@ class BlogController extends Controller
         SEOTools::setDescription($description);
         SEOTools::opengraph()->setUrl(url()->current());
         $user = UserSocialLink::where('user_id', 2)->get();
-       
+
         $data = [
             'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
             'user' => $user
@@ -239,7 +240,7 @@ class BlogController extends Controller
             'message' => 'nullable|string|max:5000',
         ]);
 
-        Mail::to('gatadegorgos@cronista.blog')->send(new ContactoMail($datos));
+        Mail::to('mivisig@gmail.com')->send(new ContactoMail($datos));
 
         return redirect()->back()->with('success', 'El teu missatge s\'ha enviat correctament.');
     }
