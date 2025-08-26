@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactoMail;
 use App\Models\Category;
-use App\Models\ParentCategory;
 use App\Models\Post;
 use App\Models\Setting;
 use App\Models\UserSocialLink;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
-use Artesaos\SEOTools\OpenGraph;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -177,6 +175,8 @@ class BlogController extends Controller
         $description = ($post->meta_description != '') ? $post->meta_description : words($post->content,35);
 
         // Meta SEO
+        SEOTools::clearResolvedInstances();
+        
         SEOTools::setTitle($title, false);
         SEOTools::setDescription($description);
         SEOTools::opengraph()->setUrl(url()->current());
