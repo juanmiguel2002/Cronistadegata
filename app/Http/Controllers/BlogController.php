@@ -11,6 +11,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Sitemap\SitemapGenerator;
 
 class BlogController extends Controller
 {
@@ -35,6 +36,8 @@ class BlogController extends Controller
         $imageURL = isset(settings()->site_logo)? asset('storage/'.settings()->site_logo) : '';
         $currentUrl = url()->current();
 
+        // SitemapGenerator::create('https://gatadegorgos.cronista.blog')->writeToFile(public_path('sitemap.xml'));
+
         // Meta SEO
         SEOTools::setTitle($title, false);
         SEOTools::setDescription($description);
@@ -51,7 +54,7 @@ class BlogController extends Controller
         $posts = Post::where('visibility', 1)->orderBy('created_at','desc')->paginate((int) $paginationLimit);
 
         $data = [
-            'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
+            // 'pageTitle' => $title,
             'posts' => $posts,
         ];
         return view('front.pages.index', $data);
@@ -171,20 +174,18 @@ class BlogController extends Controller
                     ->orderBy('id', 'desc')
                     ->first();
 
-        $title = $post->title;
+        $title = $post->title . ' - Cronista de Gata de Gorgos';
         $description = ($post->meta_description != '') ? $post->meta_description : words($post->content,35);
 
         // Meta SEO
-        SEOTools::clearResolvedInstances();
-        
         SEOTools::setTitle($title, false);
         SEOTools::setDescription($description);
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'article');
-        SEOTools::opengraph()->addImage(asset('storage/images/posts'. $post->featured_image));
+        SEOTools::opengraph()->addImage(asset('storage/images/posts/'. $post->featured_image));
 
         $data = [
-            'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
+            // 'pageTitle' => $title . ' - Cronista de Gata de Gorgos',
             'post' => $post,
             'relatedPosts' => $relatedPosts,
             'nextPost' => $nextPost,
