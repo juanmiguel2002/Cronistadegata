@@ -1,5 +1,5 @@
 @extends('front.layout.pages-layout')
-@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title')
+{{-- @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title') --}}
 @section('meta_tags')
     {!! SEO::generate() !!}
 @endsection

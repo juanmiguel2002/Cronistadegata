@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     @yield('meta_tags')
-    <title>@yield('pageTitle')</title>
+    {{-- <title>@yield('pageTitle')</title> --}}
     <link href="{{ asset('front/css/style.css') }}" rel="stylesheet" type='text/css' />
     <link href="{{ asset('front/css/footer.css') }}" rel="stylesheet" type='text/css' />
 
