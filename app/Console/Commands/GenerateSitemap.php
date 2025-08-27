@@ -2,11 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\SitemapGeneratedMail;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
-use Spatie\Sitemap\SitemapGenerator;
-
+use Spatie\Sitemap\Sitemap;
 class GenerateSitemap extends Command
 {
     /**
@@ -31,11 +28,20 @@ class GenerateSitemap extends Command
     public function handle()
     {
         // modify this to your own needs
-        SitemapGenerator::create(config('app.url'))
-            ->writeToFile(public_path('sitemap.xml'));
+        $sitemap = Sitemap::create()
+            ->add(config('app.url'))
+            ->add(route('destacats'))
+            ->add(route('posts.filter'))
+            ->add(route('search'));
+
+        foreach (\App\Models\Post::all() as $post) {
+            $sitemap->add(route('post', $post->slug), $post->updated_at, 0.8);
+        }
+        foreach (\App\Models\Category::all() as $category) {
+            $sitemap->add(route('category', $category->slug), $category->updated_at, 0.7);
+        }
+        $sitemap->writeToFile(public_path('sitemap.xml'));
+
         $this->info('Sitemap generated successfully.');
-        $sitemapUrl = url('/sitemap.xml');
-        Mail::to('juanmi0802@gmail.com')->send(new SitemapGeneratedMail($sitemapUrl));
-        $this->info('Notification email sent successfully.');
     }
 }
