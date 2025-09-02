@@ -60,6 +60,7 @@
                     @error('g-recaptcha-response')
                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
+                    <br>
                     <button type="submit" class="btn btn-primary px-4">Enviar</button>
                 </form>
 
