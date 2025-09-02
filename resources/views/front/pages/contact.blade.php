@@ -55,6 +55,11 @@
                         <textarea class="form-control" id="message" name="message" style="height: 150px;" placeholder="Escribe tu mensaje" required></textarea>
                         <label for="message">Missatge</label>
                     </div>
+                    <br>
+                    {!! NoCaptcha::display() !!}
+                    @error('g-recaptcha-response')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
                     <button type="submit" class="btn btn-primary px-4">Enviar</button>
                 </form>
 

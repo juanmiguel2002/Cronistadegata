@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('front/vendors/styles/icon-font.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+
 
 </head>
 
@@ -27,5 +29,6 @@
     <x-footer />
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {!! NoCaptcha::renderJs() !!}
 </body>
 </html>

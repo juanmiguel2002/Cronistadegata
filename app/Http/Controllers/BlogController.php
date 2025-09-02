@@ -239,6 +239,15 @@ class BlogController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'nullable|string|max:5000',
+            'g-recaptcha-response' => 'required|captcha'
+        ]
+        , [
+            'name.required' => 'El camp nom és obligatori.',
+            'email.required' => 'El camp correu electrònic és obligatori.',
+            'email.email' => 'El camp correu electrònic ha de ser una adreça vàlida.',
+            'message.max' => 'El missatge no pot superar els 5000 caràcters.',
+            'g-recaptcha-response.required' => 'El camp reCAPTCHA és obligatori.',
+            'g-recaptcha-response.captcha' => 'La verificació reCAPTCHA ha fallat. Torna-ho a intentar.'
         ]);
 
         Mail::to('mivisig@gmail.com')->send(new ContactoMail($datos));
