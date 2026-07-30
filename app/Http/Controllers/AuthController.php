@@ -6,8 +6,8 @@ use App\Models\User;
 use App\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 
 class AuthController extends Controller
 {
@@ -103,28 +103,52 @@ class AuthController extends Controller
             'email.email' => 'Dirección de correo electrónico no válida.',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $status = Password::broker('users')->sendResetLink(
+            $request->only('email')
+        );
 
-        $token = base64_decode(Str::random(64));
-
-        $oldToken = DB::table('password_reset_tokens')
-            ->where('email', $user->email)->first();
-
-        if ($oldToken) {
-            DB::table('password_reset_tokens')
-                ->where('email', $user->email)->update([
-                    'token' => $token,
-                    'created_at' => now()
-                ]);
-        }else {
-            DB::table('password_reset_tokens')->insert([
-                'email' => $user->email,
-                'token' => $token,
-                'created_at' => now()
-            ]);
+        if ($status === Password::RESET_LINK_SENT) {
+            return redirect()->route('admin.forgot')->with('success', 'Enlace de restablecimiento de contraseña enviado a su correo electrónico.');
         }
-        $link = route('admin.reset', $token);
-        $user->sendPasswordResetNotification($user->createToken());
-        return redirect()->route('admin.forgot')->with('success', 'Enlace de restablecimiento de contraseña enviado a su correo electrónico.');
+
+        return redirect()->route('admin.forgot')->withInput()->with('fail', 'No se ha podido enviar el enlace de restablecimiento. Inténtelo de nuevo más tarde.');
+    }
+
+    public function resetForm(Request $request, string $token){
+        $data = [
+            'pageTitle' => 'Restablecer contraseña',
+            'token' => $token,
+            'email' => $request->query('email', ''),
+        ];
+        return view('back.pages.auth.reset', $data);
+    }
+
+    public function resetPasswordHandler(Request $request){
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ], [
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        ]);
+
+        $status = Password::broker('users')->reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => $password,
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('admin.login')->with('success', 'Contraseña restablecida correctamente. Ya puede iniciar sesión.');
+        }
+
+        return redirect()->back()->withInput($request->only('email'))->with('fail', 'El enlace de restablecimiento no es válido o ha caducado.');
     }
 }

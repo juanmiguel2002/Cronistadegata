@@ -87,7 +87,19 @@
                         <div class="form-group">
                             <label for=""><strong>Categories</strong>:</label>
                             <select name="category" class="custom-select form-control" required>
-                                {!! $categories !!}
+                                @foreach($pcategories as $pcategory)
+                                    <optgroup label="{{ $pcategory->name }}">
+                                        @foreach($pcategory->categoria as $category)
+                                            <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                                @if($categories->count() > 0)
+                                    <option value="">Seleccionar Categoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <small class="text-danger text-error category_error"></small>
                         </div>

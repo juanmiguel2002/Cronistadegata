@@ -23,10 +23,11 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::middleware(['guest','preventBackHistory'])->group(function(){
         Route::controller(AuthController::class)->group(function () {
             Route::get('/login', 'loginForm')->name('login');
-            Route::post('/login', 'loginHandler')->name('login_handler');
+            Route::post('/login', 'loginHandler')->name('login_handler')->middleware('throttle:6,1');
             Route::get('/forgot-password', 'forgotForm')->name('forgot');
-            Route::post('/send-password-link', 'sendPassword')->name('sendPasswordLink');
+            Route::post('/send-password-link', 'sendPassword')->name('sendPasswordLink')->middleware('throttle:6,1');
             Route::get('/reset-password/{token}', 'resetForm')->name('reset');
+            Route::post('/reset-password', 'resetPasswordHandler')->name('resetPasswordHandler')->middleware('throttle:6,1');
         });
     });
 

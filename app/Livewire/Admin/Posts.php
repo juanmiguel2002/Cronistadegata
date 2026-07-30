@@ -14,7 +14,8 @@ class Posts extends Component
 {
     use WithPagination;
     public $perPage = 10;
-    public $categories_html;
+    public $pcategories;
+    public $categories;
 
     public $search = '';
     public $user, $category, $visibility, $sort = 'desc';
@@ -51,31 +52,12 @@ class Posts extends Component
     public function mount() {
         $this->user = Auth::user()->type == "superAdmin" ? Auth::user()->id : '';
         $this->post_visibility = $this->visibility == 'public' ? 1 : 0;
-        $categories_html = '';
 
-        $pcategories = ParentCategory::whereHas('categoria', function($q){
+        $this->pcategories = ParentCategory::whereHas('categoria', function($q){
             $q->whereHas('posts');
         })->orderBy('name', 'asc')->get();
 
-        $categories = Category::whereHas('posts')->where('parent', 0)->orderBy('name', 'asc')->get();
-
-        if(count($pcategories) > 0){
-            foreach($pcategories as $pc){
-                $categories_html.= '<optgroup label="'.$pc->name.'">';
-                foreach($pc->categoria as $c){
-                    $categories_html.= '<option value="'.$c->id.'">'.$c->name.'</option>';
-                }
-                $categories_html.= '</optgroup>';
-            }
-        }
-
-        if (count($categories) > 0) {
-            foreach ($categories as $c) {
-                $categories_html.= '<option value="'.$c->id.'">'.$c->name.'</option>';
-            }
-        }
-        $this->categories_html = $categories_html;
-
+        $this->categories = Category::whereHas('posts')->where('parent', 0)->orderBy('name', 'asc')->get();
     }
 
     public function deletePost($id){
@@ -112,7 +94,7 @@ class Posts extends Component
     public function render()
     {
         $posts = Auth::user()->type == "superAdmin" ?
-        Post::search(trim($this->search))
+        Post::with(['post_category', 'user'])->search(trim($this->search))
             ->when($this->user, function ($query){
                 $query->where('user_id', $this->user);
             })
@@ -124,7 +106,7 @@ class Posts extends Component
             })->when($this->sort, function ($query){
                 $query->orderBy('id', $this->sort);
             })->paginate($this->perPage) :
-        Post::search(trim($this->search))
+        Post::with(['post_category', 'user'])->search(trim($this->search))
             ->when($this->user, function ($query){
                 $query->where('user_id', $this->user);
             })

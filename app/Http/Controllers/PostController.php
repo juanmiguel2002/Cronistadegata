@@ -16,28 +16,14 @@ class PostController extends Controller
 {
     //
     public function addPost(Request $request) {
-        $categories_html = '';
         $pcategories = ParentCategory::whereHas('categoria')->orderBy('name', 'asc')->get();
         $categories = Category::where('parent', 0)->orderBy('name', 'asc')->get();
 
-        if(count($pcategories) > 0) {
-            foreach($pcategories as $pcategory) {
-                $categories_html .= '<optgroup label="'.$pcategory->name.'">';
-                foreach($pcategory->categoria as $category) {
-                    $categories_html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
-                }
-                $categories_html .= '</optgroup>';
-            }
-        }
-        if(count($categories) > 0) {
-            $categories_html .= '<option value="">Seleccionar Categoria</option>';
-            foreach($categories as $category) {
-                $categories_html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
-            }
-        }
         $data = [
             'pageTitle' => 'Nou Article',
-            'categories' => $categories_html
+            'pcategories' => $pcategories,
+            'categories' => $categories,
+            'selectedCategory' => null,
         ];
 
         return view('back.pages.add_post', $data);
@@ -49,6 +35,7 @@ class PostController extends Controller
             'title' => 'required|unique:posts,title|max:255',
             'content' => 'nullable',
             'category' => 'required|exists:categories,id',
+            'visibility' => 'required|in:0,1',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp'
         ], [
@@ -57,6 +44,8 @@ class PostController extends Controller
             'title.max' => 'El títol no pot tenir més de 255 caràcters.',
             'category.required' => 'La categoria és obligatòria.',
             'category.exists' => 'La categoria seleccionada no és vàlida.',
+            'visibility.required' => 'La visibilitat és obligatòria.',
+            'visibility.in' => 'La visibilitat seleccionada no és vàlida.',
             'featured_image.image' => 'El fitxer de la imatge destacada ha de ser una imatge.',
             'featured_image.mimes' => 'La imatge destacada ha de ser un fitxer de tipus: jpeg, png, jpg, gif, svg, webp.',
             'images.*.image' => 'Tots els fitxers de la galeria han de ser imatges.',
@@ -72,20 +61,7 @@ class PostController extends Controller
             $imageName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
             $file->move(public_path($path), $imageName);
 
-            // generate thumbnail image
-            if(!File::isDirectory($resized_image)){
-                File::makeDirectory($resized_image, 0777,true,true);
-            }
-
-            // thumbnail
-            // Image::make($path. $imageName)
-            //     ->fit(250,250)
-            //     ->save($resized_image . 'thumb_'. $imageName);
-
-            // resized
-            Image::make($path. $imageName)
-                ->fit(512,320)
-               ->save($resized_image . 'resized_'. $imageName);
+            $this->saveResizedImage($path . $imageName, $resized_image, 'resized_' . $imageName, 512, 320);
         }
 
         // Crear el post
@@ -108,14 +84,7 @@ class PostController extends Controller
                 $name = time() . '_' . preg_replace('/\s+/', '_', $image->getClientOriginalName());
                 $image->move(public_path($path), $name);
 
-                if(!File::isDirectory($resized_imagen)){
-                    File::makeDirectory($resized_imagen, 0777,true,true);
-                }
-
-                // resized
-                Image::make($path . $name)
-                    ->fit(1024, 640)
-                    ->save($resized_imagen . 'resized_' . $name);
+                $this->saveResizedImage($path . $name, $resized_imagen, 'resized_' . $name, 1024, 640);
 
                 PostImage::create([
                     'post_id' => $post->id,
@@ -131,6 +100,18 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * Fit-resize an already-uploaded image into $resizedDir, creating the directory if needed.
+     */
+    private function saveResizedImage(string $sourcePath, string $resizedDir, string $resizedFileName, int $width, int $height): void
+    {
+        if (!File::isDirectory($resizedDir)) {
+            File::makeDirectory($resizedDir, 0777, true, true);
+        }
+
+        Image::make($sourcePath)->fit($width, $height)->save($resizedDir . $resizedFileName);
+    }
+
     public function allPosts(){
         $data =[
             'pageTitle' => 'Articles'
@@ -141,37 +122,15 @@ class PostController extends Controller
     public function editPost(Request $request, $id = null) {
 
         $post = Post::findOrFail($id);
-        $categories_html = '';
         $pcategories = ParentCategory::whereHas('categoria')->orderBy('name', 'asc')->get();
         $categories = Category::where('parent', 0)->orderBy('name', 'asc')->get();
-        if(count($pcategories) > 0) {
-            foreach($pcategories as $pcategory) {
-                $categories_html .= '<optgroup label="'.$pcategory->name.'">';
-                foreach($pcategory->categoria as $category) {
-                    if($category->id == $post->category) {
-                        $categories_html .= '<option selected value="'.$category->id.'">'.$category->name.'</option>';
-                    } else {
-                        $categories_html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
-                    }
-                }
-                $categories_html .= '</optgroup>';
-            }
-        }
-
-        if(count($categories) > 0) {
-            foreach($categories as $category) {
-                if($category->id == $post->category) {
-                    $categories_html .= '<option selected value="'.$category->id.'">'.$category->name.'</option>';
-                } else {
-                    $categories_html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
-                }
-            }
-        }
 
         $data = [
             'pageTitle' => 'Edit Post',
             'post' => $post,
-            'categories' => $categories_html
+            'pcategories' => $pcategories,
+            'categories' => $categories,
+            'selectedCategory' => $post->category,
         ];
 
         return view('back.pages.edit_post', $data);
@@ -187,7 +146,11 @@ class PostController extends Controller
             'title' =>'required|max:255|unique:posts,title,'. $post->id,
             'content' =>'nullable',
             'category' =>'required|exists:categories,id',
+            'visibility' => 'required|in:0,1',
             'featured_image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp',
+        ], [
+            'visibility.required' => 'La visibilitat és obligatòria.',
+            'visibility.in' => 'La visibilitat seleccionada no és vàlida.',
         ]);
 
         if ($request->hasFile('featured_image')) {
@@ -201,24 +164,8 @@ class PostController extends Controller
                 // Definir las rutas para las imágenes redimensionadas
                 $resized_path = $path . 'resized/';
 
-                // Verifica si ya existen las versiones redimensionadas
-                $thumb_exists = File::exists(public_path($resized_path . 'thumb_' . $new_imageName));
-                $resized_exists = File::exists(public_path($resized_path . 'resized_' . $new_imageName));
-
-                // Si las versiones redimensionadas no existen, las generamos
-                if (!$thumb_exists) {
-                    // thumbnail
-                    Image::make(public_path($path . $new_imageName))
-                        ->fit(250, 250)
-                        ->save(public_path($resized_path . 'thumb_' . $new_imageName));
-                }
-
-                if (!$resized_exists) {
-                    // resized
-                    Image::make(public_path($path . $new_imageName))
-                        ->fit(512, 320)
-                        ->save(public_path($resized_path . 'resized_' . $new_imageName));
-                }
+                $this->saveResizedImage(public_path($path . $new_imageName), public_path($resized_path), 'thumb_' . $new_imageName, 250, 250);
+                $this->saveResizedImage(public_path($path . $new_imageName), public_path($resized_path), 'resized_' . $new_imageName, 512, 320);
 
                 // Eliminar la imagen anterior
                 if ($old_image != null && File::exists(public_path($path . $old_image))) {

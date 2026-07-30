@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,8 +33,9 @@ class AppServiceProvider extends ServiceProvider
             return route('admin.login');
         });
 
-
-
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return route('admin.reset', ['token' => $token, 'email' => $user->email]);
+        });
 
 
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
@@ -38,6 +39,7 @@ class Personalizar extends Component
             ['key' => 'pagination_limit'],
             ['value' => $this->paginationLimit]
         );
+        Cache::forget('setting_pagination_limit');
 
         // Emitir un mensaje de éxito al administrador
         session()->flash('success', 'El número de elementos por página se actualizó correctamente.');
@@ -53,6 +55,7 @@ class Personalizar extends Component
             ['key' => 'pagination_destacados'],
             ['value' => $this->pagination_destacados]
         );
+        Cache::forget('setting_pagination_destacados');
 
         // Emitir un mensaje de éxito al administrador
         session()->flash('success', 'El número de elementos por página se actualizó correctamente.');

@@ -2,28 +2,25 @@
 
 use App\Models\Category;
 use App\Models\GeneralSettings;
-use App\Models\ParentCategory;
-use App\Models\Post;
+use App\Models\Setting;
 use App\Models\UserSocialLink;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 if (!function_exists('settings')) {
     function settings(){
-        $settings = GeneralSettings::take(1)->first();
-
-        if (!is_null($settings)){
-            return $settings;
-        }
+        return Cache::rememberForever('general_settings', function () {
+            return GeneralSettings::take(1)->first();
+        });
     }
 }
 
-// Dynamic Navigation menu
-if (!function_exists('navigations')) {
-    function navigations() {
-        $navegations_html = '';
-        $pcategories = ParentCategory::whereHas('categoria', function($q){
-            $q->whereHas('posts');
-        })->orderBy('name', 'asc')->get();
+// Cached lookup for key/value settings (e.g. pagination_limit, pagination_destacados)
+if (!function_exists('setting_value')) {
+    function setting_value(string $key, $default = null) {
+        return Cache::rememberForever("setting_$key", function () use ($key, $default) {
+            return Setting::where('key', $key)->value('value') ?? $default;
+        });
     }
 }
 
@@ -71,4 +68,3 @@ if (!function_exists('category')) {
                     ->get();
     }
 }
-?>

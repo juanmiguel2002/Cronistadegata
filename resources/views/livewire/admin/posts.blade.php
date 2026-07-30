@@ -20,7 +20,16 @@
                 <label for="category"><b class="text-secondary">Categoría</b>:</label>
                 <select wire:model.live='category' class="custom-select form-control" id="category">
                     <option value="">Selecciona Categoría</option>
-                    {!! $categories_html !!}
+                    @foreach ($pcategories as $pcategory)
+                        <optgroup label="{{ $pcategory->name }}">
+                            @foreach ($pcategory->categoria as $c)
+                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                    @foreach ($categories as $c)
+                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
