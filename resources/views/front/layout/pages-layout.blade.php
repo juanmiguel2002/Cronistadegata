@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-es">
+<html lang="ca-ES-valencia">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -15,6 +15,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('front/vendors/styles/icon-font.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    {{-- Schema.org global: organització editora + lloc web amb cerca --}}
+    @php
+        $orgName = settings()->site_name ?? 'Cronista de Gata de Gorgos';
+        $orgLogo = isset(settings()->site_logo) ? asset('storage/'.settings()->site_logo) : '';
+        $orgLd = array_filter([
+            '@context' => 'https://schema.org',
+            '@type' => 'NewsMediaOrganization',
+            'name' => $orgName,
+            'url' => url('/'),
+            'logo' => $orgLogo ?: null,
+            'sameAs' => [
+                'https://www.facebook.com/cronista.degata.5',
+                'https://www.instagram.com/cronistagata/',
+            ],
+        ]);
+        $siteLd = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            'name' => $orgName,
+            'url' => url('/'),
+            'inLanguage' => 'ca',
+            'potentialAction' => [
+                '@type' => 'SearchAction',
+                'target' => [
+                    '@type' => 'EntryPoint',
+                    'urlTemplate' => url('/search').'?query={search_term_string}',
+                ],
+                'query-input' => 'required name=search_term_string',
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($orgLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($siteLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    @stack('schema')
 </head>
 
 <body>

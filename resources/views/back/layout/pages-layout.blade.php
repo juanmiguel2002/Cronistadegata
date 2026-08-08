@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="/assets/jquery-ui-1.14.1/jquery-ui.structure.min.css">
         <link rel="stylesheet" href="/assets/jquery-ui-1.14.1/jquery-ui.theme.min.css">
 		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
+		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/admin-modern.css" />
         @stack('styles')
         @kropifyStyles
 	</head>

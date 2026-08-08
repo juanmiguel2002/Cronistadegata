@@ -36,8 +36,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for=""><strong>Site Meta Description</strong><small> (Opcional)</small></label>
-                            <textarea class="form-control" wire:model='site_meta_description' cols="4" rows="4" placeholder="Type site meta description..."></textarea>
+                            <label for="site_meta_description"><strong>Site Meta Description</strong><small> (Opcional)</small></label>
+                            <textarea id="site_meta_description" class="form-control" wire:model='site_meta_description' cols="4" rows="4" placeholder="Type site meta description..."></textarea>
                             @error('site_meta_description') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Save Changes</button>

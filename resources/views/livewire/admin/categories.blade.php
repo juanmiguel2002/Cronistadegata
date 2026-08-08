@@ -121,8 +121,8 @@
                         <input type="hidden" wire:model='pcategory_id'>
                     @endif
                     <div class="form-group">
-                        <label for="">Nom</label>
-                        <input type="text" class="form-control" wire:model='pcategory_name' placeholder="Nom categoría Pare">
+                        <label for="pcategory_name">Nom</label>
+                        <input type="text" id="pcategory_name" class="form-control" wire:model='pcategory_name' placeholder="Nom categoría Pare">
                         @error('pcategory_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -155,8 +155,8 @@
                         <input type="hidden" wire:model='category_id'>
                     @endif
                     <div class="form-group">
-                        <label for=""><strong>Categoría P.:</strong></label>
-                        <select wire:model='parent' class="custom-select">
+                        <label for="parent"><strong>Categoría P.:</strong></label>
+                        <select id="parent" wire:model='parent' class="custom-select">
                             <option value="0">Selecciona Categoría P.</option>
                             @foreach ($parentCategories as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -166,8 +166,8 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="">Nom Categoría</label>
-                        <input type="text" class="form-control" wire:model='category_name' placeholder="Nom Categoría">
+                        <label for="category_name">Nom Categoría</label>
+                        <input type="text" id="category_name" class="form-control" wire:model='category_name' placeholder="Nom Categoría">
                         @error('category_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>

@@ -1,0 +1,215 @@
+/* =====================================================================
+   Admin Modern — capa de estilo unificada, moderna y minimalista.
+   Se carga DESPUÉS de style.css para sobreescribir la plantilla DeskApp
+   sin tocar el markup de las páginas (compatible con Livewire).
+   ===================================================================== */
+:root {
+    --am-bg:      #f6f7fb;
+    --am-card:    #ffffff;
+    --am-border:  #eceef3;
+    --am-text:    #1e2432;
+    --am-muted:   #8b90a0;
+    --am-accent:  #4b7bec;
+    --am-accent-d:#3867d6;
+    --am-radius:  14px;
+    --am-shadow:  0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.04);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--am-bg);
+    color: var(--am-text);
+}
+
+/* ---- Contenedores / cards ---- */
+.card-box,
+.footer-wrap.card-box {
+    background: var(--am-card);
+    border: 1px solid var(--am-border);
+    border-radius: var(--am-radius);
+    box-shadow: var(--am-shadow);
+}
+
+/* Títulos de sección */
+.card-box h4.text-blue,
+.card-box .h4.text-blue,
+.page-header .title h4 {
+    color: var(--am-text) !important;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.page-header .title h4 { font-size: 24px; }
+
+/* ---- Breadcrumb ---- */
+.breadcrumb { background: transparent; padding-left: 0; }
+.breadcrumb-item, .breadcrumb-item.active { color: var(--am-muted); font-size: 13px; }
+
+/* ---- Botones ---- */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 9px 16px;
+    transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+.btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 8px; }
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+    background-color: var(--am-accent);
+    border-color: var(--am-accent);
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: var(--am-accent-d) !important;
+    border-color: var(--am-accent-d) !important;
+    box-shadow: 0 6px 16px rgba(75,123,236,.28);
+}
+.btn-secondary {
+    background-color: #eef0f5;
+    border-color: #eef0f5;
+    color: #4b5163;
+}
+.btn-secondary:hover { background-color: #e3e6ee !important; color: #333 !important; }
+.btn-outline-primary { border-color: var(--am-accent); color: var(--am-accent); }
+.btn-outline-primary:hover { background-color: var(--am-accent); border-color: var(--am-accent); }
+
+/* ---- Tablas ---- */
+.table { color: var(--am-text); margin-bottom: 0; }
+.table thead th,
+.table thead.bg-secondary,
+.table thead.bg-secondary th {
+    background: transparent !important;
+    color: var(--am-muted) !important;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    border: none;
+    border-bottom: 1px solid var(--am-border);
+    padding: 12px 14px;
+    vertical-align: middle;
+}
+.table td {
+    padding: 13px 14px;
+    font-size: 14px;
+    border-top: 1px solid var(--am-border);
+    vertical-align: middle;
+}
+.table.table-striped tbody tr:nth-of-type(odd) { background-color: transparent; }
+.table tbody tr { transition: background-color .12s ease; }
+.table tbody tr:hover { background-color: #fafbfd; }
+.table a { color: var(--am-text); font-weight: 500; }
+.table a:hover { color: var(--am-accent); text-decoration: none; }
+.table img { border-radius: 8px; object-fit: cover; }
+
+/* ---- Badges / pills ---- */
+.badge {
+    font-weight: 600;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 999px;
+}
+.badge-success { background: #e7f7ef; color: #1e9c66; }
+.badge-warning { background: #fdf1e3; color: #d1841f; }
+
+/* ---- Acciones de tabla ---- */
+.table-actions a { transition: transform .12s ease; display: inline-block; }
+.table-actions a:hover { transform: scale(1.15); text-decoration: none; }
+
+/* ---- Formularios ---- */
+label b, label strong, .form-group label { color: #5a6072; font-weight: 600; font-size: 13px; }
+.form-control, .custom-select {
+    border: 1px solid var(--am-border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--am-text);
+    background-color: #fff;
+    transition: border-color .12s ease, box-shadow .12s ease;
+}
+.form-control:focus, .custom-select:focus {
+    border-color: var(--am-accent);
+    box-shadow: 0 0 0 3px rgba(75,123,236,.14);
+}
+
+/* ---- Modales ---- */
+.modal-content {
+    border: none;
+    border-radius: var(--am-radius);
+    box-shadow: 0 24px 60px rgba(16,24,40,.20);
+    overflow: hidden;
+}
+.modal-header { border-bottom: 1px solid var(--am-border); padding: 18px 22px; }
+.modal-title { font-weight: 700; font-size: 17px; }
+.modal-body { padding: 22px; }
+.modal-footer { border-top: 1px solid var(--am-border); padding: 16px 22px; }
+
+/* ---- Paginación Livewire ---- */
+.pagination .page-link {
+    border: 1px solid var(--am-border);
+    color: var(--am-text);
+    margin: 0 3px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--am-accent);
+    border-color: var(--am-accent);
+}
+
+/* ---- Header / topbar ---- */
+.header { box-shadow: 0 1px 2px rgba(16,24,40,.05); }
+
+/* ---- Dashboard chart (Livewire) ---- */
+.dc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.dc-seg {
+    display: inline-flex;
+    border: 1px solid var(--am-border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.dc-seg-btn {
+    border: none;
+    background: transparent;
+    color: var(--am-muted);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: background-color .12s ease, color .12s ease;
+}
+.dc-seg-btn.active { background: var(--am-text); color: #fff; }
+.dc-seg-btn:not(.active):hover { background: #f4f5f8; color: var(--am-text); }
+
+.dc-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+.dc-filters .custom-select { width: auto; min-width: 170px; flex: 0 1 auto; }
+
+.dc-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+@media (max-width: 560px) { .dc-kpis { grid-template-columns: 1fr; } }
+.dc-kpi {
+    background: #f8f9fc;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+.dc-kpi-label { font-size: 12px; color: var(--am-muted); margin-bottom: 4px; }
+.dc-kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--am-text); }
+
+.dc-chart-wrap { position: relative; width: 100%; height: 200px; }

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carousel;
+use App\Models\Category;
+use App\Models\ParentCategory;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +17,16 @@ class AdminController extends Controller
     //
     public function adminDashboard(Request $request){
         $data = [
-            'pageTitle' => 'Artícles',
+            'pageTitle' => 'Dashboard',
+            'postsCount' => Post::count(),
+            'categoriesCount' => Category::count(),
+            'parentCategoriesCount' => ParentCategory::count(),
+            'carouselCount' => Carousel::count(),
+            'recentPosts' => Post::with('post_category')->latest()->take(5)->get(),
+            'mostVisitedPosts' => Post::with('post_category')->orderByDesc('visitas')->take(5)->get(),
         ];
 
-        return view('back.pages.posts', $data);
+        return view('back.pages.dashboard', $data);
     }
 
     public function logout(Request $request){
@@ -34,6 +44,15 @@ class AdminController extends Controller
     }
 
     public function updateProfilePicture(Request $request){
+        $request->validate([
+            'profilePicture' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'profilePicture.required' => 'Debe seleccionar una imagen.',
+            'profilePicture.image' => 'El archivo debe ser una imagen.',
+            'profilePicture.mimes' => 'La imagen debe ser de tipo: jpeg, png, jpg, webp.',
+            'profilePicture.max' => 'La imagen no puede superar los 2MB.',
+        ]);
+
         $user = User::findOrFail(Auth::id());
         $path = 'images/users/';
         $file = $request->file('profilePicture');

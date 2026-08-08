@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Mail\ContactoMail;
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\Setting;
 use App\Models\UserSocialLink;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -46,12 +45,12 @@ class BlogController extends Controller
         // Open Graph
         SEOTools::opengraph()->setUrl($currentUrl);
         SEOTools::opengraph()->addImage($imageURL);
-        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::opengraph()->addProperty('type', 'website');
 
         // Obtener el límite de paginación desde la configuración
-        $paginationLimit = Setting::where('key', 'pagination_limit')->value('value');
+        $paginationLimit = setting_value('pagination_limit');
 
-        $posts = Post::where('visibility', 1)->orderBy('created_at','desc')->paginate((int) $paginationLimit);
+        $posts = Post::with(['post_category', 'user'])->where('visibility', 1)->orderBy('created_at','desc')->paginate((int) $paginationLimit);
 
         $data = [
             // 'pageTitle' => $title,
@@ -63,7 +62,7 @@ class BlogController extends Controller
     public function showCategory(Request $request, $slug = null) {
         $category = Category::where('slug', $slug)->firstOrFail();
 
-        $posts = Post::where('category', $category->id)->orderBy('created_at','desc')->paginate(8);
+        $posts = Post::with(['post_category', 'user'])->where('category', $category->id)->where('visibility', 1)->orderBy('created_at','desc')->paginate(8);
         $title = $category->name . ' - Cronista de Gata de Gorgos';
         $description = 'Articuls de la categoria '. $category->name;
 
@@ -84,26 +83,31 @@ class BlogController extends Controller
 
         if ($query) {
             $keywords = explode(' ', $query);
-            $postsQuery = Post::query();
+            $postsQuery = Post::with(['post_category', 'user']);
 
-            foreach ($keywords as $keyword) {
-                $postsQuery->orWhere('title', 'LIKE', '%'. $keyword. '%');
-            }
+            $postsQuery->where(function ($q) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $q->orWhere('title', 'LIKE', '%'. $keyword. '%');
+                }
+            });
+
             $posts = $postsQuery->where('visibility', 1)
                                 ->orderBy('created_at','desc')
                                 ->paginate(10);
-            $title = 'Resultas de la búsqueda: "'. $query. '"';
-            $description = 'Resultados de la búsqueda para "'. $query. '"';
+            $title = 'Resultats de la cerca: "'. $query. '"';
+            $description = 'Resultats de la cerca per a "'. $query. '"';
 
         } else {
-            $posts = collect();
+            $posts = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
 
-            $title = 'Search'. $query;
-            $description = 'Resultados de búsqueda de publicaciones de blog en nuestro sitio web.';
+            $title = 'Cerca';
+            $description = 'Cerca d\'articles al blog del Cronista de Gata de Gorgos.';
         }
         // Meta SEO
         SEOTools::setTitle($title, false);
         SEOTools::setDescription($description);
+        // Les pàgines de resultats de cerca no s'han d'indexar (contingut prim/duplicat)
+        SEOMeta::setRobots('noindex, follow');
 
         $data = [
             'pageTitle' => $title,
@@ -120,7 +124,7 @@ class BlogController extends Controller
         if (!$request->filled('year') && !$request->filled('month')) {
             return redirect()->back()->with('error', 'Ha de seleccionar almenys un filtre (any o mes).');
         }
-        $query = Post::query();
+        $query = Post::with(['post_category', 'user'])->where('visibility', 1);
 
         if ($request->filled('year')) {
             $query->whereYear('created_at', $request->year);
@@ -140,6 +144,8 @@ class BlogController extends Controller
             . ($request->year ?? 'Tots els anys') : '');
 
         SEOTools::setTitle($title, false);
+        // Les pàgines de filtre són combinacions dinàmiques: no indexar
+        SEOMeta::setRobots('noindex, follow');
 
         $posts = $query->paginate(20);
         $data = [
@@ -151,13 +157,20 @@ class BlogController extends Controller
 
     public function showPost(Request $request, $slug) {
 
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = Post::where('slug', $slug)->where('visibility', 1)->firstOrFail();
 
-        // Incrementar el contador de visitas
-        $post->increment('visitas');
+        // Incrementar el contador de visitas (una vez por sesión y por post)
+        $viewedPosts = $request->session()->get('viewed_posts', []);
+        if (!in_array($post->id, $viewedPosts)) {
+            $post->increment('visitas');
+            \App\Models\PostView::create(['post_id' => $post->id]);
+            $viewedPosts[] = $post->id;
+            $request->session()->put('viewed_posts', $viewedPosts);
+        }
         // Related Posts
-        $relatedPosts = Post::where('category',$post->category)
+        $relatedPosts = Post::with(['post_category', 'user'])->where('category',$post->category)
                     ->where('id', '!=', $post->id)
+                    ->where('visibility', 1)
                     ->orderBy('id', 'asc')
                     ->take(3)->get();
 
@@ -171,6 +184,7 @@ class BlogController extends Controller
                     // Siguiente Post
         $nextPost = Post::where('id', '<', $post->id)
                     // ->where('category', $post->category)
+                    ->where('visibility', 1)
                     ->orderBy('id', 'desc')
                     ->first();
 
@@ -204,10 +218,10 @@ class BlogController extends Controller
         SEOTools::setDescription($description);
         SEOTools::opengraph()->setUrl(url()->current());
 
-        $paginationLimit = Setting::where('key', 'pagination_destacados')->value('value');
+        $paginationLimit = setting_value('pagination_destacados');
 
         // Obtener los posts con más visitas (puedes ajustar el límite)
-        $posts = Post::where('visibility', 1)->orderBy('visitas', 'desc')->paginate((int) $paginationLimit);
+        $posts = Post::with(['post_category', 'user'])->where('visibility', 1)->orderBy('visitas', 'desc')->paginate((int) $paginationLimit);
 
         $data = [
             'pageTitle' => $title,

@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\GeneralSettings;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -49,6 +50,7 @@ class Settings extends Component
            'site_description' => $this->site_meta_description,
            'site_keywords' => $this->site_meta_keywords,
         ]);
+        Cache::forget('general_settings');
 
         $this->dispatch('showToastr', ['type' => 'success', 'message' => 'General Settings updated successfully']);
     }
@@ -59,6 +61,7 @@ class Settings extends Component
 
         // Actualizar la base de datos con la ruta de la imagen
         $this->settings->update(['site_logo' => $filePath]);
+        Cache::forget('general_settings');
 
         // Opcional: Emitir un evento o redirigir al usuario con un mensaje de éxito
         $this->dispatch('showToastr', ['type' => 'success', 'message' => 'Site logo updated successfully.']);
@@ -75,6 +78,7 @@ class Settings extends Component
 
         // Actualizar la base de datos con la nueva ruta
         $this->settings->update(['site_favicon' => $filePath]);
+        Cache::forget('general_settings');
 
         // Emitir un evento para notificar al usuario
         $this->dispatch('showToastr', ['type' => 'success','message' => 'Site Favicon updated successfully.']);

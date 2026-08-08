@@ -20,7 +20,16 @@
                 <label for="category"><b class="text-secondary">Categoría</b>:</label>
                 <select wire:model.live='category' class="custom-select form-control" id="category">
                     <option value="">Selecciona Categoría</option>
-                    {!! $categories_html !!}
+                    @foreach ($pcategories as $pcategory)
+                        <optgroup label="{{ $pcategory->name }}">
+                            @foreach ($pcategory->categoria as $c)
+                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                    @foreach ($categories as $c)
+                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
@@ -32,7 +41,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label for="visibility"><b class="text-secondary">Ordenar</b>:</label>
+                <label for="sort"><b class="text-secondary">Ordenar</b>:</label>
                 <select wire:model.live='sort' class="custom-select form-control" id="sort">
                     <option value="asc">ASC</option>
                     <option value="desc">DESC</option>

@@ -41,12 +41,12 @@
                 <div class="card card-box mb-2">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for=""><b>Títol</b></label>
+                            <label for="title"><b>Títol</b></label>
                             <input type="text" name="title" id="title" class="form-control" value="{{ $post->title }}">
                             <small class="text-danger text-error title_error"></small>
                         </div>
                         <div class="form-group">
-                            <label for=""><b>Text</b></label>
+                            <label for="content"><b>Text</b></label>
                             <textarea name="content" id="content" class="form-control" rows="10" cols="30">{!!$post->content!!}</textarea>
                         </div>
                     </div>
@@ -56,14 +56,23 @@
                 <div class="card card-box mb-2">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for=""><strong>Categories</strong>:</label>
-                            <select name="category" class="custom-select form-control" required>
-                                {!! $categories !!}
+                            <label for="category"><strong>Categories</strong>:</label>
+                            <select name="category" id="category" class="custom-select form-control" required>
+                                @foreach($pcategories as $pcategory)
+                                    <optgroup label="{{ $pcategory->name }}">
+                                        @foreach($pcategory->categoria as $category)
+                                            <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
+                                @endforeach
                             </select>
                             <small class="text-danger text-error category_error"></small>
                         </div>
                         <div class="form-group">
-                            <label for=""><span>Image</span></label>
+                            <label for="featured_image"><span>Image</span></label>
                             <input type="file" name="featured_image" id="featured_image" class="form-control-file form-control" height="auto">
                             <small class="text-danger error-text featured_image_error"></small>
                         </div>
@@ -77,7 +86,7 @@
                         </div> --}}
                         <hr>
                         <div class="form-group">
-                            <label for=""><span>Visibility:</span></label>
+                            <span class="d-block mb-2"><b>Visibility:</b></span>
                             <div class="custom-control custom-radio mb-5">
                                 <input type="radio" name="visibility" id="customRadio1" class="custom-control-input" value="1" {{$post->visibility == 1 ? 'checked' : ''}}>
                                 <label class="custom-control-label" for="customRadio1">Publicada</label>
@@ -119,7 +128,7 @@
             toolbar: {
                 items: [
                     'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                    'blockQuote', 'insertTable', '|', 'undo', 'redo'
+                    'blockQuote', 'insertTable', 'uploadImage', '|', 'undo', 'redo'
                 ]
             },
             language: 'es', // Cambiar el idioma, por ejemplo: 'es' para español
@@ -132,6 +141,10 @@
                 contentToolbar: [
                     'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
                 ]
+            },
+            simpleUpload: {
+                uploadUrl: '{{ route('admin.uploadContentImage') }}',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
             },
             licenseKey: '', // Puedes dejarlo vacío si usas la versión gratuita
 

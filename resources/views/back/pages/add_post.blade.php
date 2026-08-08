@@ -42,7 +42,7 @@
                 <div class="card card-box mb-2">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for=""><b>Títol</b></label>
+                            <label for="titulo"><b>Títol</b></label>
                             <input type="text" name="title" id="titulo" class="form-control" placeholder="Títol article" required oninput="contarCaracteres()">
                             <small class="text-sm text-gray-500 mt-1">
                                 Caracteres: <span id="contador">0</span>/255    
@@ -50,7 +50,7 @@
                             <small class="text-danger text-error title_error"></small>
                         </div>
                         <div class="form-group">
-                            <label for=""><b>Text</b></label>
+                            <label for="content"><b>Text</b></label>
                             <textarea name="content" id="content" class="form-control" rows="20" cols="40"></textarea>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         <div class="card-header weight-500">Carrousel</div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for=""><span>Imatges del Carrousel</span></label>
+                                <label for="images"><span>Imatges del Carrousel</span></label>
                                 <input type="file" name="images[]" id="images" class="form-control-file form-control" multiple>
                                 <small class="text-danger error-text "></small>
                             </div>
@@ -85,14 +85,26 @@
                 <div class="card card-box mb-2">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for=""><strong>Categories</strong>:</label>
-                            <select name="category" class="custom-select form-control" required>
-                                {!! $categories !!}
+                            <label for="category"><strong>Categories</strong>:</label>
+                            <select name="category" id="category" class="custom-select form-control" required>
+                                @foreach($pcategories as $pcategory)
+                                    <optgroup label="{{ $pcategory->name }}">
+                                        @foreach($pcategory->categoria as $category)
+                                            <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                                @if($categories->count() > 0)
+                                    <option value="">Seleccionar Categoria</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <small class="text-danger text-error category_error"></small>
                         </div>
                         <div class="form-group">
-                            <label for=""><span>Imatge destacada</span></label>
+                            <label for="featured_image"><span>Imatge destacada</span></label>
                             <input type="file" name="featured_image" id="featured_image" class="form-control-file form-control" height="auto">
                             <small class="text-danger error-text featured_image_error"></small>
                         </div>
@@ -106,7 +118,7 @@
                         </div> --}}
                         <hr>
                         <div class="form-group">
-                            <label for=""><span>Visibility:</span></label>
+                            <span class="d-block mb-2"><b>Visibility:</b></span>
                             <div class="custom-control custom-radio mb-5">
                                 <input type="radio" name="visibility" id="customRadio1" class="custom-control-input" value="1" checked>
                                 <label class="custom-control-label" for="customRadio1">Public</label>
@@ -148,7 +160,7 @@
             toolbar: {
                 items: [
                     'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                    'blockQuote', 'insertTable', '|', 'undo', 'redo'
+                    'blockQuote', 'insertTable', 'uploadImage', '|', 'undo', 'redo'
                 ]
             },
             language: 'es', // Cambiar el idioma, por ejemplo: 'es' para español
@@ -161,6 +173,10 @@
                 contentToolbar: [
                     'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
                 ]
+            },
+            simpleUpload: {
+                uploadUrl: '{{ route('admin.uploadContentImage') }}',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
             },
             licenseKey: '', // Puedes dejarlo vacío si usas la versión gratuita
 

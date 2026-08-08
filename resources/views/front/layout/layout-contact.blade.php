@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es-es">
+<html lang="ca-ES-valencia">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     @yield('meta_tags')
-    <title>@yield('pageTitle')</title>
+    {{-- <title>@yield('pageTitle')</title> --}}
     <link rel="stylesheet" href="{{ asset('front/css/contact.css') }}" type="text/css"/>
     <link rel="stylesheet" href="{{ asset('front/css/footer.css') }}">
     <link rel="shortcut icon" href="{{ asset('storage/'. settings()->site_favicon) }}" type="image/jpg" />

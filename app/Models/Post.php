@@ -39,11 +39,15 @@ class Post extends Model
     {
         return $this->hasMany(PostImage::class);
     }
+    public function views()
+    {
+        return $this->hasMany(PostView::class, 'post_id', 'id');
+    }
     public function user() {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function post_category() {
-        return $this->hasOne(Category::class, 'id', 'category');
+        return $this->belongsTo(Category::class, 'category', 'id');
     }
     public function scopeSearch($query, $term) {
         $term = "%$term%";

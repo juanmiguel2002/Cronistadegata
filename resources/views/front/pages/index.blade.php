@@ -16,23 +16,16 @@
                     <i class="ti-timer mr-1"> </i> {{readDuration($post->title, $post->content)}} @choice('min|mins', readDuration($post->title, $post->content))
                 </h5>
                 <div class="image">
-                    @php
-                        $imagePath = storage_path('app/public/images/posts/resized/resized_' . $post->featured_image);
-                        $imageUrl  = asset('storage/images/posts/resized/resized_' . $post->featured_image);
-                    @endphp
-
-                    @if (file_exists($imagePath))
-                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
-                    @else
-                        <img src="{{ asset('storage/images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
+                    @if ($post->featured_image)
+                        <img src="{{ post_image_url($post->featured_image, 'resized') }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
                     @endif
                 </div>
 
                 {!!Str::ucfirst(words($post->content, 65))!!}
                 <a class="link post-tema" href="{{ route('post', $post->slug) }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">Llegir més</a>
             </article>
-            <x-modal />
         @endforeach
+        <x-modal />
         {{$posts->appends(request()->input())->links('components.custom_pagination')}}
     @endif
 @endsection
