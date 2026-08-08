@@ -15,7 +15,7 @@
         </header>
         <div class="fakeimg">
             @if ($post->featured_image != null && $post->featured_image != 'sin_imagen.jpg')
-                <img src="{{ asset('storage/images/posts/'. $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" style="width:100%;max-width:600px">
+                <img src="{{ asset('storage/images/posts/'. $post->featured_image) }}" alt="{{ $post->title }}" onclick="openModal(this)" style="width:100%;max-width:600px">
             @endif
         </div>
         <div class="texto">
@@ -29,7 +29,7 @@
                 <div class="gallery-container">
                     @foreach ($post->images as $image)
                         <figure class="gallery-item" >
-                            <img src="{{ asset('storage/images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)">
+                            <img src="{{ asset('storage/images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}" onclick="openModal(this)">
                         </figure>
                     @endforeach
                 </div>

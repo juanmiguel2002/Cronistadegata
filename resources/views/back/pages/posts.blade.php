@@ -41,38 +41,9 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Enviar solicitud de eliminación
-                        Livewire.dispatch('deletePostAction',[id])
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-
-                                // Swal.fire({
-                                //     icon: 'success',
-                                //     title: 'Eliminado',
-                                //     text: 'El post ha sido eliminado.',
-                                //     timer: 2000,
-                                //     showConfirmButton: false
-                                // }).then(() => {
-                                //     // Opcional: Recargar la página o eliminar el elemento del DOM
-                                //     location.reload();
-                                // });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: data.message || 'Ocurrió un problema al eliminar el post.'
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'No se pudo completar la solicitud.'
-                            });
-                        });
+                        // El propio método deletePostAction() ya notifica el resultado
+                        // (éxito o error) mediante el evento global 'showToastr'.
+                        Livewire.dispatch('deletePostAction', [id]);
                     }
                 });
         });

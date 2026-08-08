@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carousel;
+use App\Models\Category;
+use App\Models\ParentCategory;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +16,34 @@ class AdminController extends Controller
 {
     //
     public function adminDashboard(Request $request){
+        // Artícles creats en els darrers 6 mesos (agrupat en PHP per ser agnòstic de BD)
+        $start = now()->startOfMonth()->subMonths(5);
+        $postsByMonthRaw = Post::where('created_at', '>=', $start)
+            ->get(['created_at'])
+            ->groupBy(fn ($post) => $post->created_at->format('Y-m'))
+            ->map->count();
+
+        $monthlyPosts = collect(range(0, 5))->map(function ($i) use ($start, $postsByMonthRaw) {
+            $month = $start->copy()->addMonths($i);
+            return [
+                'label' => ucfirst($month->translatedFormat('M')),
+                'count' => (int) ($postsByMonthRaw[$month->format('Y-m')] ?? 0),
+            ];
+        });
+
         $data = [
-            'pageTitle' => 'Artícles',
+            'pageTitle' => 'Dashboard',
+            'postsCount' => Post::count(),
+            'categoriesCount' => Category::count(),
+            'parentCategoriesCount' => ParentCategory::count(),
+            'carouselCount' => Carousel::count(),
+            'totalVisits' => (int) Post::sum('visitas'),
+            'monthlyPosts' => $monthlyPosts,
+            'recentPosts' => Post::with('post_category')->latest()->take(5)->get(),
+            'mostVisitedPosts' => Post::with('post_category')->orderByDesc('visitas')->take(5)->get(),
         ];
 
-        return view('back.pages.posts', $data);
+        return view('back.pages.dashboard', $data);
     }
 
     public function logout(Request $request){

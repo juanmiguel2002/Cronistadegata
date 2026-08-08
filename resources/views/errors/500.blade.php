@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 500 - Página no encontrada</title>
+    <title>Error 500 - Error interno del servidor</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,7 +44,7 @@
 <body>
     <div class="container">
         <div class="error-code">500</div>
-        <div class="error-message">Lo sentimos, la página que estás buscando no se ha encontrado.</div>
+        <div class="error-message">Lo sentimos, ha ocurrido un error inesperado en el servidor. Ya estamos al tanto del problema.</div>
         <a href="/" class="home-link">Volver a la página principal</a>
     </div>
 </body>

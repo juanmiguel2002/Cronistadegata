@@ -16,8 +16,8 @@
                             <form wire:submit.prevent="updatePaginationLimit" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="">Nº d'artícles per pàgina <i>(Inici)</i>:</label>
-                                    <input type="number" wire:model="paginationLimit"  class="form-control" min="1" max="100">
+                                    <label for="paginationLimit">Nº d'artícles per pàgina <i>(Inici)</i>:</label>
+                                    <input type="number" id="paginationLimit" wire:model="paginationLimit"  class="form-control" min="1" max="100">
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3">Guardar</button>
                             </form>

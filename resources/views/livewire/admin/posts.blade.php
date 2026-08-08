@@ -41,7 +41,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label for="visibility"><b class="text-secondary">Ordenar</b>:</label>
+                <label for="sort"><b class="text-secondary">Ordenar</b>:</label>
                 <select wire:model.live='sort' class="custom-select form-control" id="sort">
                     <option value="asc">ASC</option>
                     <option value="desc">DESC</option>

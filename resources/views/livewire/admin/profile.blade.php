@@ -73,8 +73,8 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="">Bio</label>
-                                                <textarea wire:model='bio' cols="4" rows="4" class="form-control" placeholder="Bio"></textarea>
+                                                <label for="bio">Bio</label>
+                                                <textarea id="bio" wire:model='bio' cols="4" rows="4" class="form-control" placeholder="Bio"></textarea>
                                                 @error('bio')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -131,8 +131,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label for=""><b>Facebook</b></label>
-                                                <input wire:model='facebook_url' type="text" class="form-control" placeholder="Facebook URL">
+                                                <label for="facebook_url"><b>Facebook</b></label>
+                                                <input id="facebook_url" wire:model='facebook_url' type="text" class="form-control" placeholder="Facebook URL">
                                                 @error('facebook_url')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -140,8 +140,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label for=""><b>Instagram</b></label>
-                                                <input wire:model='instagram_url' type="text" class="form-control" placeholder="Instagram URL">
+                                                <label for="instagram_url"><b>Instagram</b></label>
+                                                <input id="instagram_url" wire:model='instagram_url' type="text" class="form-control" placeholder="Instagram URL">
                                                 @error('instagram_url')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -149,8 +149,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label for=""><b>Youtube</b></label>
-                                                <input wire:model='youtube_url' type="text" class="form-control" placeholder="Youtube URL">
+                                                <label for="youtube_url"><b>Youtube</b></label>
+                                                <input id="youtube_url" wire:model='youtube_url' type="text" class="form-control" placeholder="Youtube URL">
                                                 @error('youtube_url')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

@@ -12,7 +12,7 @@
                         <h4 class="text-blue h4">Gestió del Carrusel</h4>
                     </div>
                     <div class="pull-right">
-                        <button data-toggle="modal" data-target="#carrusel" class="btn btn-primary btn-sm rounded">Añadir Imágenes</button>
+                        <button wire:click="addImage" data-toggle="modal" data-target="#carrusel" class="btn btn-primary btn-sm rounded">Añadir Imágenes</button>
                     </div>
                 </div>
                 <div class="table-responsive mt-4">
@@ -33,9 +33,9 @@
                                     <td>{{ $image->orden }}</td>
                                     <td>
                                         <div class="table-actions">
-                                            <a href="javascript:;" wire:click='editParentCategory({{$image->id}})' class="text-primary mx-2">
+                                            <a href="javascript:;" wire:click='editImage({{$image->id}})' class="text-primary mx-2">
                                                 <i class="dw dw-edit2"></i> Editar</a>
-                                            <a href="javascript:;" wire:click='deleteParentCategory({{$image->id}})' class="text-danger mx-2">
+                                            <a href="javascript:;" wire:click='deleteImage({{$image->id}})' class="text-danger mx-2">
                                                 <i class="dw dw-delete-3"></i> Eliminar</a>
                                         </div>
                                     </td>
@@ -58,30 +58,43 @@
     <div wire:ignore.self class="modal fade" id="carrusel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
         data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
-            <form class="modal-content" wire:submit="addImages">
+            <form class="modal-content" wire:submit="{{ $isUpdateImage ? 'updateImage' : 'addImages' }}">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Subir Imágenes</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">{{ $isUpdateImage ? 'Editar Imagen' : 'Subir Imágenes' }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        <label>Seleccionar Imágenes:</label>
-                        <input type="file" wire:model="newImages" multiple>
-                        @error('newImages.*') <span class="error">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="mt-4">
-                        @foreach ($newImages as $index => $image)
-                            <div class="mt-2">
-                                <label>Título para la imagen {{ $index + 1 }}:</label>
-                                <input type="text" wire:model="titles.{{ $index }}" class="border rounded w-full p-1">
-                                @error('titles.' . $index) <span class="error text-red-500">{{ $message }}</span> @enderror
-                            </div>
-                        @endforeach
-                    </div>
+                    @if ($isUpdateImage)
+                        <div>
+                            <label for="carrusel_title">Título:</label>
+                            <input type="text" id="carrusel_title" wire:model="title" class="border rounded w-full p-1">
+                            @error('title') <span class="error text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mt-4">
+                            <label for="carrusel_new_image">Reemplazar imagen (opcional):</label>
+                            <input type="file" id="carrusel_new_image" wire:model="newImage">
+                            @error('newImage') <span class="error text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                    @else
+                        <div>
+                            <label>Seleccionar Imágenes:</label>
+                            <input type="file" wire:model="newImages" multiple>
+                            @error('newImages.*') <span class="error">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mt-4">
+                            @foreach ($newImages as $index => $image)
+                                <div class="mt-2">
+                                    <label>Título para la imagen {{ $index + 1 }}:</label>
+                                    <input type="text" wire:model="titles.{{ $index }}" class="border rounded w-full p-1">
+                                    @error('titles.' . $index) <span class="error text-red-500">{{ $message }}</span> @enderror
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Subir Imágenes</button>
+                    <button type="submit" class="btn btn-primary">{{ $isUpdateImage ? 'Guardar Cambios' : 'Subir Imágenes' }}</button>
                 </div>
             </form>
         </div>

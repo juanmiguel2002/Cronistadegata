@@ -25,15 +25,16 @@
                     @endphp
 
                     @if (file_exists($imagePath))
-                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
+                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
                     @else
-                        <img src="{{ asset('storage/images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" id="myImg" onclick="openModal(this)" loading="lazy">
+                        <img src="{{ asset('storage/images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
                     @endif
                 </div>
                 {!!Str::ucfirst(words($post->content, 60))!!}
                 <a class="link post-tema" href="{{ route('post', $post->slug) }}">Llegir més</a>
             </article>
         @endforeach
+        <x-modal />
     @else
         <div class="card">
             <h3>No hi ha cap article amb el filtre seleccionat.</h3>
