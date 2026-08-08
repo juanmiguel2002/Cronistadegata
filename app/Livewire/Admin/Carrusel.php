@@ -55,6 +55,7 @@ class Carrusel extends Component
             Carousel::create([
                 'title' => $this->titles[$index] ?? 'Sin título',
                 'image_path' => $path,
+                'activo' => true,
             ]);
         }
         $this->reset(['newImages', 'titles']);
@@ -92,6 +93,21 @@ class Carrusel extends Component
         $this->reset(['isUpdateImage', 'image_id', 'title', 'newImage']);
         $this->dispatch('showToastr', ['type' => 'success', 'message' => 'Imagen actualizada correctamente.']);
         $this->dispatch('showModal', false);
+    }
+
+    public function toggleActive($id)
+    {
+        $carouselItem = Carousel::find($id);
+
+        if ($carouselItem) {
+            $carouselItem->activo = !$carouselItem->activo;
+            $carouselItem->save();
+
+            $this->images = Carousel::orderBy('orden')->get();
+
+            $estat = $carouselItem->activo ? 'activada' : 'desactivada';
+            $this->dispatch('showToastr', ['type' => 'success', 'message' => "Imatge {$estat} a la portada."]);
+        }
     }
 
     public function deleteImage($id) {
