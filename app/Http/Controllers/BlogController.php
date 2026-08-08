@@ -45,7 +45,7 @@ class BlogController extends Controller
         // Open Graph
         SEOTools::opengraph()->setUrl($currentUrl);
         SEOTools::opengraph()->addImage($imageURL);
-        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::opengraph()->addProperty('type', 'website');
 
         // Obtener el límite de paginación desde la configuración
         $paginationLimit = setting_value('pagination_limit');
@@ -94,18 +94,20 @@ class BlogController extends Controller
             $posts = $postsQuery->where('visibility', 1)
                                 ->orderBy('created_at','desc')
                                 ->paginate(10);
-            $title = 'Resultas de la búsqueda: "'. $query. '"';
-            $description = 'Resultados de la búsqueda para "'. $query. '"';
+            $title = 'Resultats de la cerca: "'. $query. '"';
+            $description = 'Resultats de la cerca per a "'. $query. '"';
 
         } else {
             $posts = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10);
 
-            $title = 'Search'. $query;
-            $description = 'Resultados de búsqueda de publicaciones de blog en nuestro sitio web.';
+            $title = 'Cerca';
+            $description = 'Cerca d\'articles al blog del Cronista de Gata de Gorgos.';
         }
         // Meta SEO
         SEOTools::setTitle($title, false);
         SEOTools::setDescription($description);
+        // Les pàgines de resultats de cerca no s'han d'indexar (contingut prim/duplicat)
+        SEOMeta::setRobots('noindex, follow');
 
         $data = [
             'pageTitle' => $title,
@@ -142,6 +144,8 @@ class BlogController extends Controller
             . ($request->year ?? 'Tots els anys') : '');
 
         SEOTools::setTitle($title, false);
+        // Les pàgines de filtre són combinacions dinàmiques: no indexar
+        SEOMeta::setRobots('noindex, follow');
 
         $posts = $query->paginate(20);
         $data = [

@@ -3,6 +3,61 @@
 @section('meta_tags')
     {!! SEO::generate() !!}
 @endsection
+
+@push('schema')
+    @php
+        $hasImg = $post->featured_image && $post->featured_image !== 'sin_imagen.jpg';
+        $articleImg = $hasImg
+            ? asset('storage/images/posts/'.$post->featured_image)
+            : (isset(settings()->site_logo) ? asset('storage/'.settings()->site_logo) : null);
+
+        $articleLd = array_filter([
+            '@context' => 'https://schema.org',
+            '@type' => 'NewsArticle',
+            'headline' => \Illuminate\Support\Str::limit($post->title, 110, ''),
+            'image' => $articleImg ? [$articleImg] : null,
+            'datePublished' => optional($post->created_at)->toIso8601String(),
+            'dateModified' => optional($post->updated_at)->toIso8601String(),
+            'author' => [
+                '@type' => 'Person',
+                'name' => $post->user->name ?? 'Cronista de Gata de Gorgos',
+            ],
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => settings()->site_name ?? 'Cronista de Gata de Gorgos',
+                'logo' => [
+                    '@type' => 'ImageObject',
+                    'url' => isset(settings()->site_logo) ? asset('storage/'.settings()->site_logo) : null,
+                ],
+            ],
+            'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => url()->current()],
+            'description' => \Illuminate\Support\Str::limit(strip_tags($post->content), 200),
+            'articleSection' => $post->post_category->name ?? null,
+            'inLanguage' => 'ca',
+        ]);
+
+        $breadcrumbItems = [
+            ['name' => 'Inici', 'url' => route('home')],
+        ];
+        if ($post->post_category) {
+            $breadcrumbItems[] = ['name' => $post->post_category->name, 'url' => route('category', $post->post_category->slug)];
+        }
+        $breadcrumbItems[] = ['name' => $post->title, 'url' => url()->current()];
+
+        $breadcrumbLd = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => collect($breadcrumbItems)->values()->map(fn ($item, $i) => [
+                '@type' => 'ListItem',
+                'position' => $i + 1,
+                'name' => $item['name'],
+                'item' => $item['url'],
+            ])->all(),
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($articleLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    <script type="application/ld+json">{!! json_encode($breadcrumbLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endpush
 @section('main')
     <article class="card">
         <header class="post-header">
