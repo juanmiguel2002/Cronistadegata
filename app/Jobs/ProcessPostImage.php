@@ -51,8 +51,12 @@ class ProcessPostImage implements ShouldQueue
         $base = pathinfo($this->filename, PATHINFO_FILENAME);
 
         if ($this->type === 'featured') {
+            // Mida configurable des de l'admin (Personalitzar), amb 512x320 per defecte.
+            $width = max(50, (int) setting_value('resized_width', 512));
+            $height = max(50, (int) setting_value('resized_height', 320));
+
             $resizedDir = $postsDir . 'resized/';
-            $processor->makeVariant($original, $resizedDir . 'resized_' . $base . '.webp', 512, 320);
+            $processor->makeVariant($original, $resizedDir . 'resized_' . $base . '.webp', $width, $height);
             $processor->makeVariant($original, $resizedDir . 'thumb_' . $base . '.webp', 250, 250);
         } else {
             $galleryDir = $postsDir . 'carousel/resized/';
