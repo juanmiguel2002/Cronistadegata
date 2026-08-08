@@ -70,7 +70,7 @@
         </header>
         <div class="fakeimg">
             @if ($post->featured_image != null && $post->featured_image != 'sin_imagen.jpg')
-                <img src="{{ post_image_url($post->featured_image, 'resized') }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy" style="width:100%;max-width:600px">
+                <img src="{{ post_image_url($post->featured_image, null) }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy" style="width:100%;max-width:600px">
             @endif
         </div>
         <div class="texto">
