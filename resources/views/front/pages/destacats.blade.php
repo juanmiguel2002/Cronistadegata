@@ -20,15 +20,8 @@
                 </h5>
 
                 <div class="fakeimg">
-                    @php
-                        $imagePath = storage_path('app/public/images/posts/resized/resized_' . $post->featured_image);
-                        $imageUrl  = asset('storage/images/posts/resized/resized_' . $post->featured_image);
-                    @endphp
-
-                    @if (file_exists($imagePath))
-                        <img src="{{ $imageUrl }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
-                    @else
-                        <img src="{{ asset('storage/images/posts/' . $post->featured_image) }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
+                    @if ($post->featured_image)
+                        <img src="{{ post_image_url($post->featured_image, 'resized') }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
                     @endif
                 </div>
 
