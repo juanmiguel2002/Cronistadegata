@@ -184,37 +184,11 @@
         color: var(--dash-muted);
         font-size: 14px;
     }
-
-    /* ---- Chart panel ---- */
-    .chart-panel { margin-bottom: 24px; }
-    .chart-body { padding: 22px; }
-    .chart-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
-    .chart-meta .big { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--dash-text); }
-    .chart-meta .small { font-size: 13px; color: var(--dash-muted); }
-    .chart-bars { display: flex; align-items: flex-end; gap: 14px; height: 150px; }
-    .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; }
-    .chart-col .bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
-    .chart-col .bar {
-        width: 100%;
-        max-width: 46px;
-        background: linear-gradient(180deg, #6a95f0 0%, #4b7bec 100%);
-        border-radius: 8px 8px 4px 4px;
-        min-height: 4px;
-        position: relative;
-        transition: filter .14s ease;
-    }
-    .chart-col .bar:hover { filter: brightness(1.08); }
-    .chart-col .bar .bar-val {
-        position: absolute;
-        top: -22px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--dash-text);
-    }
-    .chart-col .bar-label { font-size: 12px; color: var(--dash-muted); font-weight: 500; }
 </style>
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 @endpush
 
 @section('content')
@@ -252,35 +226,7 @@
             </a>
         </div>
 
-        @php $maxMonthly = max(1, $monthlyPosts->max('count')); @endphp
-        <div class="panel chart-panel">
-            <div class="panel-head">
-                <h2>Artícles publicats · últims 6 mesos</h2>
-                <span class="panel-link" style="color: var(--dash-muted); cursor: default;">
-                    <i class="bi bi-eye"></i> {{ number_format($totalVisits, 0, ',', '.') }} visites totals
-                </span>
-            </div>
-            <div class="chart-body">
-                <div class="chart-meta">
-                    <span class="big">{{ $monthlyPosts->sum('count') }}</span>
-                    <span class="small">artícles nous en aquest període</span>
-                </div>
-                <div class="chart-bars">
-                    @foreach ($monthlyPosts as $m)
-                        <div class="chart-col">
-                            <div class="bar-wrap">
-                                <div class="bar" style="height: {{ max(4, round($m['count'] / $maxMonthly * 100)) }}%;">
-                                    @if ($m['count'] > 0)
-                                        <span class="bar-val">{{ $m['count'] }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="bar-label">{{ $m['label'] }}</div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+        @livewire('admin.dashboard-chart')
 
         <div class="dash-grid">
             <div class="panel">

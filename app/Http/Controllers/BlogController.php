@@ -159,6 +159,7 @@ class BlogController extends Controller
         $viewedPosts = $request->session()->get('viewed_posts', []);
         if (!in_array($post->id, $viewedPosts)) {
             $post->increment('visitas');
+            \App\Models\PostView::create(['post_id' => $post->id]);
             $viewedPosts[] = $post->id;
             $request->session()->put('viewed_posts', $viewedPosts);
         }
