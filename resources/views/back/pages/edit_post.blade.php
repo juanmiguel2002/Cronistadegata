@@ -128,7 +128,7 @@
             toolbar: {
                 items: [
                     'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                    'blockQuote', 'insertTable', '|', 'undo', 'redo'
+                    'blockQuote', 'insertTable', 'uploadImage', '|', 'undo', 'redo'
                 ]
             },
             language: 'es', // Cambiar el idioma, por ejemplo: 'es' para español
@@ -141,6 +141,10 @@
                 contentToolbar: [
                     'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
                 ]
+            },
+            simpleUpload: {
+                uploadUrl: '{{ route('admin.uploadContentImage') }}',
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
             },
             licenseKey: '', // Puedes dejarlo vacío si usas la versión gratuita
 

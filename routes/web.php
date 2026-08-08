@@ -50,6 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
             Route::get('/posts', 'allPosts')->name('posts');
             Route::get('/post/new', 'addPost')->name('addPost');
             Route::post('/post/create', 'createPost')->name('createPost');
+            Route::post('/post/upload-image', 'uploadContentImage')->name('uploadContentImage');
             Route::get('/post/{id}/edit', 'editPost')->name('editPost');
             Route::post('/post/update', 'updatePost')->name('updatePost');
         });

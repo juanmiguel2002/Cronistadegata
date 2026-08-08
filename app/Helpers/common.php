@@ -59,6 +59,37 @@ if (!function_exists('readDuration')) {
 //     }
 // }
 
+// URL d'imatge de post amb variant lleugera i fallback a l'original.
+// $subdir: '' per a la destacada, 'carousel/' per a la galeria.
+if (!function_exists('post_image_url')) {
+    function post_image_url(?string $name, ?string $variant = 'resized', string $subdir = '') {
+        if (!$name) {
+            return asset('storage/images/posts/sin_imagen.jpg');
+        }
+
+        $baseDir = 'images/posts/' . $subdir;
+
+        if ($variant) {
+            $base = pathinfo($name, PATHINFO_FILENAME);
+
+            // 1) Variant WebP nova
+            $webp = $baseDir . 'resized/' . $variant . '_' . $base . '.webp';
+            if (is_file(public_path('storage/' . $webp))) {
+                return asset('storage/' . $webp);
+            }
+
+            // 2) Variant antiga (mateixa extensió que l'original)
+            $legacy = $baseDir . 'resized/' . $variant . '_' . $name;
+            if (is_file(public_path('storage/' . $legacy))) {
+                return asset('storage/' . $legacy);
+            }
+        }
+
+        // 3) Original
+        return asset('storage/' . $baseDir . $name);
+    }
+}
+
 // Category
 if (!function_exists('category')) {
     function category() {

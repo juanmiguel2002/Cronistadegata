@@ -15,7 +15,7 @@
         </header>
         <div class="fakeimg">
             @if ($post->featured_image != null && $post->featured_image != 'sin_imagen.jpg')
-                <img src="{{ asset('storage/images/posts/'. $post->featured_image) }}" alt="{{ $post->title }}" onclick="openModal(this)" style="width:100%;max-width:600px">
+                <img src="{{ post_image_url($post->featured_image, 'resized') }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy" style="width:100%;max-width:600px">
             @endif
         </div>
         <div class="texto">
@@ -29,7 +29,7 @@
                 <div class="gallery-container">
                     @foreach ($post->images as $image)
                         <figure class="gallery-item" >
-                            <img src="{{ asset('storage/images/posts/carousel/resized/resized_' . $image->image_name) }}" alt="{{ $post->title }}" onclick="openModal(this)">
+                            <img src="{{ post_image_url($image->image_name, 'resized', 'carousel/') }}" alt="{{ $post->title }}" onclick="openModal(this)" loading="lazy">
                         </figure>
                     @endforeach
                 </div>
@@ -90,7 +90,7 @@
                     <div class="related-post-card">
                         <a href="{{ route('post', $related->slug) }}" title="{{ $related->title }}">
                             @if($related->featured_image)
-                                <img src="{{ asset('storage/images/posts/' . $related->featured_image) }}" alt="{{ $related->featured_image }}" class="related-img">
+                                <img src="{{ post_image_url($related->featured_image, 'thumb') }}" alt="{{ $related->title }}" class="related-img" loading="lazy">
                             @endif
                             <h5 class="related-title">{{ $related->title }}</h5>
                         </a>
