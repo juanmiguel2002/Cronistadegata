@@ -67,26 +67,26 @@ if (!function_exists('post_image_url')) {
             return asset('storage/images/posts/sin_imagen.jpg');
         }
 
-        $baseDir = 'images/posts/' . $subdir;
-
         if ($variant) {
             $base = pathinfo($name, PATHINFO_FILENAME);
+            // El $subdir només afecta la carpeta de la variant (p. ex. carousel/resized/).
+            $variantDir = 'images/posts/' . $subdir . 'resized/';
 
             // 1) Variant WebP nova
-            $webp = $baseDir . 'resized/' . $variant . '_' . $base . '.webp';
+            $webp = $variantDir . $variant . '_' . $base . '.webp';
             if (is_file(public_path('storage/' . $webp))) {
                 return asset('storage/' . $webp);
             }
 
             // 2) Variant antiga (mateixa extensió que l'original)
-            $legacy = $baseDir . 'resized/' . $variant . '_' . $name;
+            $legacy = $variantDir . $variant . '_' . $name;
             if (is_file(public_path('storage/' . $legacy))) {
                 return asset('storage/' . $legacy);
             }
         }
 
-        // 3) Original
-        return asset('storage/' . $baseDir . $name);
+        // 3) Original: sempre a images/posts/ (destacada i galeria s'hi mouen)
+        return asset('storage/images/posts/' . $name);
     }
 }
 

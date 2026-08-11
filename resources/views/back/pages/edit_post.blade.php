@@ -77,7 +77,7 @@
                             <small class="text-danger error-text featured_image_error"></small>
                         </div>
                         <div class="d-block mb-3" style="max-width: 250px">
-                            <img src="{{ asset('storage/images/posts/resized/resized_' . $post->featured_image)}}" alt="" id="preview-featured-image" class="img-thumbnail" >
+                            <img src="{{ post_image_url($post->featured_image, 'resized') }}" alt="" id="preview-featured-image" class="img-thumbnail" >
                         </div>
                         {{-- <div class="form-group">
                             <label for=""><span>Tags:</span></label>
