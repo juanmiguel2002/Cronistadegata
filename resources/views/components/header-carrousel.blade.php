@@ -4,13 +4,14 @@
     $slides = \App\Models\Carousel::where('activo', 1)->orderBy('orden')->get();
 @endphp
 
-<div class="cover-title">{{ settings()->site_name ?? 'Cronista de Gata de Gorgos' }}</div>
-
 <div class="swiper mySwiper">
     <div class="swiper-wrapper">
         @foreach ($slides as $slide)
             <div class="swiper-slide">
                 <img src="{{ asset('storage/' . $slide->image_path) }}" alt="{{ $slide->title }}">
+                @if ($slide->title)
+                    <div class="slide-title">{{ $slide->title }}</div>
+                @endif
             </div>
         @endforeach
     </div>
