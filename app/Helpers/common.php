@@ -39,6 +39,31 @@ if (!function_exists('words')) {
     }
 }
 
+// Genera una meta description neta a partir del contingut HTML del post.
+// - Insereix un espai davant de cada etiqueta perquè els blocs (</p><p>, </h2>...)
+//   no fusionin l'última paraula d'un bloc amb la primera del següent.
+// - Decodifica les entitats HTML (&nbsp;, &egrave;, &amp;...).
+// - Normalitza els espais en blanc i retalla a la longitud indicada sense partir paraules.
+if (!function_exists('meta_description')) {
+    function meta_description($html, $length = 160) {
+        $text = strip_tags(str_replace('<', ' <', (string) $html));
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = trim(preg_replace('/\s+/u', ' ', $text));
+
+        if (mb_strlen($text) <= $length) {
+            return $text;
+        }
+
+        $text = mb_substr($text, 0, $length);
+        $lastSpace = mb_strrpos($text, ' ');
+        if ($lastSpace !== false) {
+            $text = mb_substr($text, 0, $lastSpace);
+        }
+
+        return rtrim($text, " .,;:") . '…';
+    }
+}
+
 // Calculate post Reading duration
 if (!function_exists('readDuration')) {
     function readDuration(...$text) {

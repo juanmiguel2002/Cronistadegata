@@ -189,7 +189,7 @@ class BlogController extends Controller
                     ->first();
 
         $title = $post->title . ' - Cronista de Gata de Gorgos';
-        $description = ($post->meta_description != '') ? $post->meta_description : words($post->content,35);
+        $description = ($post->meta_description != '') ? $post->meta_description : meta_description($post->content);
 
         // Meta SEO
         SEOTools::setTitle($title, false);

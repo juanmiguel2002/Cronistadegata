@@ -142,6 +142,7 @@
 @endpush
 @push('scripts')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/translations/ca.js"></script>
     <script>
         document.getElementById('featured_image').addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -155,15 +156,60 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        // Adaptador de pujada propi: el build "classic" del CDN no inclou
+        // SimpleUploadAdapter, així que registrem el nostre contra l'endpoint
+        // admin.uploadContentImage (desa com a WebP i retorna la URL).
+        function CustomUploadAdapterPlugin(editor) {
+            const uploadUrl = '{{ route('admin.uploadContentImage') }}';
+            const csrfToken = '{{ csrf_token() }}';
+
+            editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+                return {
+                    upload: function () {
+                        return loader.file.then(function (file) {
+                            return new Promise(function (resolve, reject) {
+                                const data = new FormData();
+                                data.append('upload', file);
+
+                                fetch(uploadUrl, {
+                                    method: 'POST',
+                                    headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+                                    body: data
+                                })
+                                .then(function (response) {
+                                    return response.json().then(function (body) {
+                                        return { ok: response.ok, body: body };
+                                    });
+                                })
+                                .then(function (res) {
+                                    if (res.ok && res.body.url) {
+                                        resolve({ default: res.body.url });
+                                    } else {
+                                        reject(res.body.message || 'No s\'ha pogut pujar la imatge.');
+                                    }
+                                })
+                                .catch(function () {
+                                    reject('No s\'ha pogut pujar la imatge.');
+                                });
+                            });
+                        });
+                    },
+                    abort: function () {}
+                };
+            };
+        }
+
         ClassicEditor
         .create(document.querySelector('#content'), {
+            extraPlugins: [CustomUploadAdapterPlugin],
             toolbar: {
                 items: [
                     'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
                     'blockQuote', 'insertTable', 'uploadImage', '|', 'undo', 'redo'
                 ]
             },
-            language: 'es', // Cambiar el idioma, por ejemplo: 'es' para español
+            language: 'ca', // Interfície en català
             image: {
                 toolbar: [
                     'imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side'
@@ -173,13 +219,7 @@
                 contentToolbar: [
                     'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties'
                 ]
-            },
-            simpleUpload: {
-                uploadUrl: '{{ route('admin.uploadContentImage') }}',
-                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
-            },
-            licenseKey: '', // Puedes dejarlo vacío si usas la versión gratuita
-
+            }
         })
         .then(function(editor){
             editor.model.document.on('change:data', () => {
