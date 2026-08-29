@@ -35,7 +35,7 @@
         <ul class="nav-menu" id="nav-menu">
             <li><a href="/">Inici</a></li>
             <li><a href="{{ route('destacats') }}">Destacats</a></li>
-            <li><a href="{{ route('contacto') }}">Contacte</a></li>
+            {{-- <li><a href="{{ route('contacto') }}">Contacte</a></li> --}}
             <li id="search">
                 <form class="navbar-search" action="{{ route('search') }}" method="GET">
                     <input type="text" name="query" placeholder="Buscar...">
