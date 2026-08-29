@@ -7,7 +7,7 @@
                         <h4 class="text-blue h4">Categories Pare</h4>
                     </div>
                     <div class="pull-right">
-                        <a href="javascript:;" wire:click='addParentCategory()' class="btn btn-primary btn-sm">Nova Categoría Pare</a>
+                        <a href="javascript:;" wire:click='addParentCategory()' class="btn btn-primary btn-sm">Nova Categoria Pare</a>
                     </div>
                 </div>
                 <div class="table-responsive mt-4">
@@ -58,7 +58,7 @@
                         <h4 class="text-blue h4">Categoríes</h4>
                     </div>
                     <div class="pull-right">
-                        <a href="javascript:;" wire:click='addCategory' class="btn btn-primary btn-sm">Nova Categoría</a>
+                        <a href="javascript:;" wire:click='addCategory' class="btn btn-primary btn-sm">Nova Categoria</a>
                     </div>
                 </div>
                 <div class="table-responsive mt-4">
@@ -75,7 +75,7 @@
                                 <tr data-index="{{$item->id}}" data-order="{{$item->order}}">
                                     <td>{{$item->id}}</td>
                                     <td><a style="cursor: pointer" href="{{ route('admin.posts', ['category'=>$item->id]) }}">{{$item->name}}</a></td>
-                                    <td>{{ $item->parentCategory ? $item->parentCategory->name : 'Sin categoría'}}</td>
+                                    <td>{{ $item->parentCategory ? $item->parentCategory->name : 'Sense categoria'}}</td>
                                     <td>{{$item->posts->count()}}</td>
                                     <td>
                                         <div class="table-actions">
@@ -110,7 +110,7 @@
             <form class="modal-content" wire:submit='{{ $isUpdatePCategory ? 'updateParentCategory()' : 'createParentCategory()' }}'>
                 <div class="modal-header">
                     <h4 class="modal-title" id="myLargeModalLabel">
-                        {{ $isUpdatePCategory ? 'Actualitzar Categoría P.' : 'Nova Categoría P.' }}
+                        {{ $isUpdatePCategory ? 'Actualitzar Categoria P.' : 'Nova Categoria P.' }}
                     </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         ×
@@ -122,7 +122,7 @@
                     @endif
                     <div class="form-group">
                         <label for="pcategory_name">Nom</label>
-                        <input type="text" id="pcategory_name" class="form-control" wire:model='pcategory_name' placeholder="Nom categoría Pare">
+                        <input type="text" id="pcategory_name" class="form-control" wire:model='pcategory_name' placeholder="Nom categoria Pare">
                         @error('pcategory_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -144,7 +144,7 @@
             <form class="modal-content" wire:submit='{{ $isUpdateCategory ? 'updateCategory()' : 'createCategory()' }}'>
                 <div class="modal-header">
                     <h4 class="modal-title" id="myLargeModalLabel">
-                        {{ $isUpdateCategory ? 'Actualitzar Categoría' : 'Nova Categoría' }}
+                        {{ $isUpdateCategory ? 'Actualitzar Categoria' : 'Nova Categoria' }}
                     </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         ×
@@ -155,9 +155,9 @@
                         <input type="hidden" wire:model='category_id'>
                     @endif
                     <div class="form-group">
-                        <label for="parent"><strong>Categoría P.:</strong></label>
+                        <label for="parent"><strong>Categoria P.:</strong></label>
                         <select id="parent" wire:model='parent' class="custom-select">
-                            <option value="0">Selecciona Categoría P.</option>
+                            <option value="0">Selecciona Categoria P.</option>
                             @foreach ($parentCategories as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                             @endforeach
@@ -166,8 +166,8 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="category_name">Nom Categoría</label>
-                        <input type="text" id="category_name" class="form-control" wire:model='category_name' placeholder="Nom Categoría">
+                        <label for="category_name">Nom Categoria</label>
+                        <input type="text" id="category_name" class="form-control" wire:model='category_name' placeholder="Nom Categoria">
                         @error('category_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>

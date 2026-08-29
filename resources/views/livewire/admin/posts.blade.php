@@ -17,9 +17,9 @@
                 </div>
             @endif
             <div class="col-md-2">
-                <label for="category"><b class="text-secondary">Categoría</b>:</label>
+                <label for="category"><b class="text-secondary">Categoria</b>:</label>
                 <select wire:model.live='category' class="custom-select form-control" id="category">
-                    <option value="">Selecciona Categoría</option>
+                    <option value="">Selecciona Categoria</option>
                     @foreach ($pcategories as $pcategory)
                         <optgroup label="{{ $pcategory->name }}">
                             @foreach ($pcategory->categoria as $c)
@@ -55,7 +55,7 @@
                     <th scope="col">Image</th>
                     <th scope="col">Titol</th>
                     <th scope="col">Author</th>
-                    <th scope="col">Categoría</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Visibility</th>
                     <th scope="col">Accions</th>
                 </thead>

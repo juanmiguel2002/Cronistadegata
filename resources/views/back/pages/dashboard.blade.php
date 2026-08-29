@@ -238,7 +238,7 @@
                     <thead>
                         <tr>
                             <th>Títol</th>
-                            <th>Categoría</th>
+                            <th>Categoria</th>
                             <th>Data</th>
                         </tr>
                     </thead>
@@ -265,7 +265,7 @@
                     <thead>
                         <tr>
                             <th>Títol</th>
-                            <th>Categoría</th>
+                            <th>Categoria</th>
                             <th>Visites</th>
                         </tr>
                     </thead>

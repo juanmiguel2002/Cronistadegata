@@ -95,7 +95,7 @@
                                     </optgroup>
                                 @endforeach
                                 @if($categories->count() > 0)
-                                    <option value="">Seleccionar Categoria</option>
+                                    <option value="">Selecciona Categoria</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>{{ $category->name }}</option>
                                     @endforeach
