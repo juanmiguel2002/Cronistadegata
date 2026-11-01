@@ -23,6 +23,11 @@ class ImageProcessor
             return;
         }
 
+        // No recomprimim GIF: GD els aplanaria i perdrien l'animació.
+        if (strtolower(pathinfo($absPath, PATHINFO_EXTENSION)) === 'gif') {
+            return;
+        }
+
         $image = Image::make($absPath);
 
         if ($image->width() > $maxWidth) {

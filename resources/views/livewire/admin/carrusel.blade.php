@@ -22,6 +22,7 @@
                             <th>Imatge</th>
                             <th>Títol</th>
                             <th>Orden</th>
+                            <th>Estat</th>
                             <th>Actions</th>
                         </thead>
                         <tbody wire:sortable="updateOrder">
@@ -31,6 +32,15 @@
                                     <td><img src="{{ asset('storage/' . $image->image_path) }}" width="125px"></td>
                                     <td>{{ $image->title }}</td>
                                     <td>{{ $image->orden }}</td>
+                                    <td>
+                                        <a href="javascript:;" wire:click="toggleActive({{ $image->id }})" title="Canviar estat" style="text-decoration:none">
+                                            @if ($image->activo)
+                                                <span class="badge badge-success"><i class="dw dw-check"></i> Actiu</span>
+                                            @else
+                                                <span class="badge badge-secondary">Inactiu</span>
+                                            @endif
+                                        </a>
+                                    </td>
                                     <td>
                                         <div class="table-actions">
                                             <a href="javascript:;" wire:click='editImage({{$image->id}})' class="text-primary mx-2">
@@ -42,7 +52,7 @@
                                 </tr>
                             @empty
                                 <tr class="text-center">
-                                    <td colspan="5">
+                                    <td colspan="6">
                                         <span class="text-info">No hi ha img!</span>
                                     </td>
                                 </tr>

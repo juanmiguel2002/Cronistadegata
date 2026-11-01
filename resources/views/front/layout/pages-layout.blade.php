@@ -15,7 +15,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('front/vendors/styles/icon-font.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N15MCHL4D4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
+    gtag('config', 'G-N15MCHL4D4');
+    </script>
     {{-- Schema.org global: organització editora + lloc web amb cerca --}}
     @php
         $orgName = settings()->site_name ?? 'Cronista de Gata de Gorgos';
@@ -99,6 +107,10 @@
             autoplay: {
                 delay: 4000,
                 disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
             },
         })
         document.getElementById('nav-toggle').addEventListener('click', function () {

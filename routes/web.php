@@ -14,8 +14,8 @@ Route::get('/posts/category/{slug}', [BlogController::class, 'showCategory'])->n
 Route::get('/search', [BlogController::class, 'showSearch'])->name('search');
 Route::get('/posts/filter', [BlogController::class, 'filterPosts'])->name('posts.filter');
 Route::get('/posts/destacats', [BlogController::class, 'showDestacats'])->name('destacats');
-Route::get('/contacto', [BlogController::class, 'contactPage'])->name('contacto');
-Route::post('/contacto', [BlogController::class, 'sendEmail'])->name('contacto.send');
+// Route::get('/contacto', [BlogController::class, 'contactPage'])->name('contacto');
+// Route::post('/contacto', [BlogController::class, 'sendEmail'])->name('contacto.send');
 
 // ADMIN ROUTES
 

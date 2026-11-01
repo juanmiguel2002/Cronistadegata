@@ -39,6 +39,31 @@ if (!function_exists('words')) {
     }
 }
 
+// Genera una meta description neta a partir del contingut HTML del post.
+// - Insereix un espai davant de cada etiqueta perquè els blocs (</p><p>, </h2>...)
+//   no fusionin l'última paraula d'un bloc amb la primera del següent.
+// - Decodifica les entitats HTML (&nbsp;, &egrave;, &amp;...).
+// - Normalitza els espais en blanc i retalla a la longitud indicada sense partir paraules.
+if (!function_exists('meta_description')) {
+    function meta_description($html, $length = 160) {
+        $text = strip_tags(str_replace('<', ' <', (string) $html));
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = trim(preg_replace('/\s+/u', ' ', $text));
+
+        if (mb_strlen($text) <= $length) {
+            return $text;
+        }
+
+        $text = mb_substr($text, 0, $length);
+        $lastSpace = mb_strrpos($text, ' ');
+        if ($lastSpace !== false) {
+            $text = mb_substr($text, 0, $lastSpace);
+        }
+
+        return rtrim($text, " .,;:") . '…';
+    }
+}
+
 // Calculate post Reading duration
 if (!function_exists('readDuration')) {
     function readDuration(...$text) {
@@ -67,26 +92,26 @@ if (!function_exists('post_image_url')) {
             return asset('storage/images/posts/sin_imagen.jpg');
         }
 
-        $baseDir = 'images/posts/' . $subdir;
-
         if ($variant) {
             $base = pathinfo($name, PATHINFO_FILENAME);
+            // El $subdir només afecta la carpeta de la variant (p. ex. carousel/resized/).
+            $variantDir = 'images/posts/' . $subdir . 'resized/';
 
             // 1) Variant WebP nova
-            $webp = $baseDir . 'resized/' . $variant . '_' . $base . '.webp';
+            $webp = $variantDir . $variant . '_' . $base . '.webp';
             if (is_file(public_path('storage/' . $webp))) {
                 return asset('storage/' . $webp);
             }
 
             // 2) Variant antiga (mateixa extensió que l'original)
-            $legacy = $baseDir . 'resized/' . $variant . '_' . $name;
+            $legacy = $variantDir . $variant . '_' . $name;
             if (is_file(public_path('storage/' . $legacy))) {
                 return asset('storage/' . $legacy);
             }
         }
 
-        // 3) Original
-        return asset('storage/' . $baseDir . $name);
+        // 3) Original: sempre a images/posts/ (destacada i galeria s'hi mouen)
+        return asset('storage/images/posts/' . $name);
     }
 }
 

@@ -17,7 +17,7 @@ class HeaderCarrousel extends Component
     public function __construct()
     {
         //
-        $this->images = Carousel::orderBy('orden')->get();
+        $this->images = Carousel::where('activo', 1)->orderBy('orden')->get();
     }
 
     /**

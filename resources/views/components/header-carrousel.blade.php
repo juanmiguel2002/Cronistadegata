@@ -1,7 +1,7 @@
 @props([])
 
 @php
-    $slides = \App\Models\Carousel::orderBy('orden')->get();
+    $slides = \App\Models\Carousel::where('activo', 1)->orderBy('orden')->get();
 @endphp
 
 <div class="swiper mySwiper">
@@ -15,6 +15,9 @@
             </div>
         @endforeach
     </div>
+    @if ($slides->count() > 1)
+        <div class="swiper-pagination"></div>
+    @endif
 </div>
 
 <nav class="navbar" id="menu">
@@ -32,7 +35,7 @@
         <ul class="nav-menu" id="nav-menu">
             <li><a href="/">Inici</a></li>
             <li><a href="{{ route('destacats') }}">Destacats</a></li>
-            <li><a href="{{ route('contacto') }}">Contacte</a></li>
+            {{-- <li><a href="{{ route('contacto') }}">Contacte</a></li> --}}
             <li id="search">
                 <form class="navbar-search" action="{{ route('search') }}" method="GET">
                     <input type="text" name="query" placeholder="Buscar...">

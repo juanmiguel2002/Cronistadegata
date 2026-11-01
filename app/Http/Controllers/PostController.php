@@ -37,8 +37,8 @@ class PostController extends Controller
             'content' => 'nullable',
             'category' => 'required|exists:categories,id',
             'visibility' => 'required|in:0,1',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:8192|dimensions:max_width=6000,max_height=6000',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:8192|dimensions:max_width=6000,max_height=6000'
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192|dimensions:max_width=6000,max_height=6000',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:8192|dimensions:max_width=6000,max_height=6000'
         ], [
             'title.required' => 'El títol és obligatori.',
             'title.unique' => 'El títol ja existeix. Si us plau, trieu un altre títol.',
@@ -48,11 +48,11 @@ class PostController extends Controller
             'visibility.required' => 'La visibilitat és obligatòria.',
             'visibility.in' => 'La visibilitat seleccionada no és vàlida.',
             'featured_image.image' => 'El fitxer de la imatge destacada ha de ser una imatge.',
-            'featured_image.mimes' => 'La imatge destacada ha de ser un fitxer de tipus: jpeg, png, jpg, gif, svg, webp.',
+            'featured_image.mimes' => 'La imatge destacada ha de ser un fitxer de tipus: jpeg, png, jpg, gif, webp.',
             'featured_image.max' => 'La imatge destacada no pot superar els 8 MB.',
             'featured_image.dimensions' => 'La imatge destacada és massa gran (màxim 6000×6000 px).',
             'images.*.image' => 'Tots els fitxers de la galeria han de ser imatges.',
-            'images.*.mimes' => 'Les imatges de la galeria han de ser fitxers de tipus: jpeg, png, jpg, gif, svg, webp.',
+            'images.*.mimes' => 'Les imatges de la galeria han de ser fitxers de tipus: jpeg, png, jpg, gif, webp.',
             'images.*.max' => 'Cada imatge de la galeria no pot superar els 8 MB.',
             'images.*.dimensions' => 'Alguna imatge de la galeria és massa gran (màxim 6000×6000 px).'
             ]
@@ -198,7 +198,7 @@ class PostController extends Controller
             'content' =>'nullable',
             'category' =>'required|exists:categories,id',
             'visibility' => 'required|in:0,1',
-            'featured_image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:8192|dimensions:max_width=6000,max_height=6000',
+            'featured_image' => 'image|mimes:jpeg,png,jpg,gif,webp|max:8192|dimensions:max_width=6000,max_height=6000',
         ], [
             'visibility.required' => 'La visibilitat és obligatòria.',
             'visibility.in' => 'La visibilitat seleccionada no és vàlida.',
