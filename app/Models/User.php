@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
 
 use App\UserStatus;
 use App\UserType;
@@ -58,7 +59,9 @@ class User extends Authenticatable
 
     public function getPictureAttribute($value)
     {
-        return $value ? asset('storage/images/users/' . $value) : asset('storage/images/users/imagen.png');
+        return $value && File::exists(public_path('storage/images/users/' . $value))
+            ? asset('storage/images/users/' . $value)
+            : asset('storage/images/users/imagen.png');
     }
 
     public function social()
